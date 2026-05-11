@@ -101,7 +101,7 @@ export const config = {
         primaryColor: getThemeColor(),
 
         // 是否启用落地页 (true=启用, false=禁用)
-        enableLandingPage: false // 默认启用
+        enableLandingPage: true // 默认启用
     },
 
     // 认证页面功能配置
@@ -269,7 +269,7 @@ export const config = {
         showImportSubscription: true,
 
         // 是否显示签到功能 (true=显示, false=隐藏)
-        showCheckIn: true,
+        showCheckIn: false,
     },
 
     // 客户端下载配置
@@ -341,7 +341,7 @@ export const config = {
     // 用户中心页面配置
     PROFILE_CONFIG: {
         // 是否显示礼品卡兑换栏目 (true=显示, false=隐藏)
-        showGiftCardRedeem: false, // 只有Xiao-V2board支持礼品卡兑换
+        showGiftCardRedeem: true, // 只有Xiao-V2board支持礼品卡兑换
 
         // 是否显示最近登录设备栏目 (true=显示, false=隐藏)
         showRecentDevices: true
@@ -520,7 +520,7 @@ export const config = {
         daysToShow: 30, // 默认显示30天
 
         // 流量趋势图是否聚合每日流量 (如果你的节点倍率全为1倍则无需开启)
-        sumDailyTraffic: false // 默认禁用
+        sumDailyTraffic: true // 默认禁用
     },
 
     // 节点列表配置
@@ -610,7 +610,7 @@ export const config = {
     // More页面自定义卡片配置
     MORE_PAGE_CONFIG: {
         // 是否启用自定义卡片功能
-        enableCustomCards: true,
+        enableCustomCards: false,
 
         // 自定义卡片列表
         // 说明:
