@@ -63,8 +63,8 @@ export const config = {
 
     // ====================  网站基础配置  ====================
     SITE_CONFIG: {
-        siteName: 'EZ-THEME-R',
-        siteDescription: 'EZ-THEME-R is best!',
+        siteName: '咸鱼、溺水中',
+        siteDescription: '溺水の咸鱼、今天也在努力浮起来!',
         // copyright会自动使用当前年份
         copyright: `© ${new Date().getFullYear()} EZ-THEME-R. All Rights Reserved.`,
 
@@ -73,15 +73,15 @@ export const config = {
 
         // Landing页面多语言标语
         landingText: {
-            'zh-CN': '探索全球网络无限可能',
-            'vi-VN': 'Khám phá khả năng vô hạn của mạng toàn cầu',
-            'en-US': 'Explore Unlimited Possibilities of Global Network',
-            'zh-TW': '探索全球網絡無限可能',
-            'ja-JP': 'グローバルネットワークの無限の可能性',
-            'ko-KR': '글로벌 네트워크의 무한한 가능성을 탐색하세요',
-            'ru-RU': 'Исследуйте безграничные возможности глобальной сети',
-            'fa-IR': 'امکانات نامحدود شبکه جهانی را کاوش کنید'
-        },
+    'zh-CN': '溺水の咸鱼，今天也在努力浮起来',
+    'vi-VN': 'Cá mặn đuối nước, hôm nay vẫn đang cố gắng nổi lên',
+    'en-US': 'A drowning salted fish, still struggling to float today',
+    'zh-TW': '溺水の鹹魚，今天也在努力浮起來',
+    'ja-JP': '溺れる塩魚、今日も浮かぼうと努力中',
+    'ko-KR': '익사하는 생선, 오늘도 떠오르기 위해 노력 중',
+    'ru-RU': 'Тонущая солёная рыба сегодня снова пытается всплыть',
+    'fa-IR': 'ماهی شور در حال غرق شدن، امروز هم برای شناور ماندن تلاش می‌کند'
+},
 
         // 自定义landing页面路径（相对于public目录
         // 例如：'testlandingpage.html'
@@ -110,7 +110,7 @@ export const config = {
         autoAgreeTerms: true,
 
         // 是否显示第三方登录 (Google、Telegram 等) (true=显示, false=隐藏)
-        showThirdPartyLogin: true,
+        showThirdPartyLogin: false,
 
         // 验证码相关配置
         verificationCode: {
