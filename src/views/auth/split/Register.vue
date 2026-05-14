@@ -890,7 +890,7 @@ export default {
 
       type: CAPTCHA_CONFIG.captchaType,
 
-      siteKey: '0x4AAAAAADNC2yzyofYA1YD_',
+      siteKey: '',
 
       verifyUrl: CAPTCHA_CONFIG[CAPTCHA_CONFIG.captchaType]?.verifyUrl || ''
 
