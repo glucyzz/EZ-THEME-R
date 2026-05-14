@@ -366,12 +366,14 @@ export const config = {
         // Google reCAPTCHA 配置 默认v2版本
         google: {
             // 验证API地址，可选，默认使用官方地址
+            siteKey: '',
             verifyUrl: 'https://www.google.com/recaptcha/api/siteverify'
         },
 
         // Cloudflare Turnstile 配置
         cloudflare: {
             // 验证API地址，可选，默认使用官方地址
+            siteKey: '0x4AAAAAADNC2yzyofYA1YD_',
             verifyUrl: 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
             
         }
