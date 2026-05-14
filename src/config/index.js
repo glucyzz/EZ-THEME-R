@@ -372,8 +372,8 @@ export const config = {
         // Cloudflare Turnstile 配置
         cloudflare: {
             // 验证API地址，可选，默认使用官方地址
-            verifyUrl: 'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-            siteKey: '0x4AAAAAADNC2yzyofYA1YD_'   // 👈 把你截图的站点密钥填这里
+            verifyUrl: 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
+            
         }
     },
 
