@@ -1,4 +1,4 @@
-﻿<template>
+<template>
 
   <div class="register-view-container">
 
@@ -67,17 +67,7 @@
 
             <div class="auth-logo">
 
-              <img
-
-                :src="logoPath"
-
-                alt="Logo"
-
-                @error="handleLogoError"
-
-                @click="goTo('/')"
-
-              />
+              <img :src="logoPath" alt="Logo" @error="handleLogoError" @click="goTo('/')" />
 
             </div>
 
@@ -99,31 +89,16 @@
 
               <!-- 有邮箱白名单的情况 -->
 
-              <div class="input-with-suffix" v-if="config.email_whitelist_suffix && config.email_whitelist_suffix.length > 0">
+              <div class="input-with-suffix"
+                v-if="config.email_whitelist_suffix && config.email_whitelist_suffix.length > 0">
 
                 <div class="input-with-icon email-prefix">
 
                   <IconMail class="input-icon" />
 
-                  <input
-
-                    type="text"
-
-                    id="emailPrefix"
-
-                    class="form-control"
-
-                    v-model="emailPrefix"
-
-                    :placeholder="$t('auth.emailPrefixPlaceholder')"
-
-                    @input="handleEmailPrefixChange"
-
-                    :disabled="codeSent"
-
-                    required
-
-                  />
+                  <input type="text" id="emailPrefix" class="form-control" v-model="emailPrefix"
+                    :placeholder="$t('auth.emailPrefixPlaceholder')" @input="handleEmailPrefixChange"
+                    :disabled="codeSent" required />
 
                 </div>
 
@@ -139,19 +114,8 @@
 
                   <div class="suffix-dropdown" v-if="showSuffixDropdown">
 
-                    <div
-
-                      v-for="suffix in config.email_whitelist_suffix"
-
-                      :key="suffix"
-
-                      class="suffix-option"
-
-                      :class="{ active: suffix === selectedSuffix }"
-
-                      @click.stop="selectSuffix(suffix)"
-
-                    >
+                    <div v-for="suffix in config.email_whitelist_suffix" :key="suffix" class="suffix-option"
+                      :class="{ active: suffix === selectedSuffix }" @click.stop="selectSuffix(suffix)">
 
                       {{ suffix }}
 
@@ -171,23 +135,8 @@
 
                 <IconMail class="input-icon" />
 
-                <input
-
-                  type="email"
-
-                  id="email"
-
-                  class="form-control"
-
-                  v-model="formData.email"
-
-                  :placeholder="$t('auth.emailPlaceholder')"
-
-                  :disabled="codeSent"
-
-                  required
-
-                />
+                <input type="email" id="email" class="form-control" v-model="formData.email"
+                  :placeholder="$t('auth.emailPlaceholder')" :disabled="codeSent" required />
 
               </div>
 
@@ -201,7 +150,8 @@
 
             <div class="form-group" v-if="config.is_email_verify === 1">
 
-              <label for="verificationCode" class="form-label">{{ $t('common.verificationCode') }} <span class="required">*</span></label>
+              <label for="verificationCode" class="form-label">{{ $t('common.verificationCode') }} <span
+                  class="required">*</span></label>
 
               <div class="input-with-button">
 
@@ -209,35 +159,13 @@
 
                   <IconCode class="input-icon" />
 
-                  <input
-
-                    type="text"
-
-                    id="verificationCode"
-
-                    class="form-control"
-
-                    v-model="formData.verificationCode"
-
-                    :placeholder="$t('auth.codePlaceholder')"
-
-                    required
-
-                  />
+                  <input type="text" id="verificationCode" class="form-control" v-model="formData.verificationCode"
+                    :placeholder="$t('auth.codePlaceholder')" required />
 
                 </div>
 
-                <button
-
-                  type="button"
-
-                  class="send-code-btn"
-
-                  @click="sendVerificationCode"
-
-                  :disabled="!isValidEmail(formData.email) || cooldown > 0 || loading"
-
-                >
+                <button type="button" class="send-code-btn" @click="sendVerificationCode"
+                  :disabled="!isValidEmail(formData.email) || cooldown > 0 || loading">
 
                   <IconSend v-if="cooldown === 0" class="icon-left" />
 
@@ -257,27 +185,15 @@
 
             <div class="form-group">
 
-              <label for="password" class="form-label">{{ $t('common.password') }} <span class="required">*</span></label>
+              <label for="password" class="form-label">{{ $t('common.password') }} <span
+                  class="required">*</span></label>
 
               <div class="input-with-icon">
 
                 <IconLock class="input-icon" />
 
-                <input
-
-                  :type="showPassword ? 'text' : 'password'"
-
-                  id="password"
-
-                  class="form-control"
-
-                  v-model="formData.password"
-
-                  :placeholder="$t('auth.passwordPlaceholder')"
-
-                  required
-
-                />
+                <input :type="showPassword ? 'text' : 'password'" id="password" class="form-control"
+                  v-model="formData.password" :placeholder="$t('auth.passwordPlaceholder')" required />
 
                 <div class="password-toggle" @click="showPassword = !showPassword">
 
@@ -297,27 +213,15 @@
 
             <div class="form-group">
 
-              <label for="confirmPassword" class="form-label">{{ $t('common.confirmPassword') }} <span class="required">*</span></label>
+              <label for="confirmPassword" class="form-label">{{ $t('common.confirmPassword') }} <span
+                  class="required">*</span></label>
 
               <div class="input-with-icon">
 
                 <IconLock class="input-icon" />
 
-                <input
-
-                  :type="showConfirmPassword ? 'text' : 'password'"
-
-                  id="confirmPassword"
-
-                  class="form-control"
-
-                  v-model="formData.confirmPassword"
-
-                  :placeholder="$t('auth.confirmPasswordPlaceholder')"
-
-                  required
-
-                />
+                <input :type="showConfirmPassword ? 'text' : 'password'" id="confirmPassword" class="form-control"
+                  v-model="formData.confirmPassword" :placeholder="$t('auth.confirmPasswordPlaceholder')" required />
 
                 <div class="password-toggle" @click="showConfirmPassword = !showConfirmPassword">
 
@@ -353,25 +257,9 @@
 
                 <IconTicket class="input-icon" />
 
-                <input
-
-                  type="text"
-
-                  id="inviteCode"
-
-                  class="form-control"
-
-                  v-model="formData.inviteCode"
-
-                  :placeholder="$t('auth.inviteCodePlaceholder')"
-
-                  :required="config.is_invite_force === 1"
-
-                  :disabled="inviteCodeFromUrl"
-
-                  :readonly="inviteCodeFromUrl"
-
-                />
+                <input type="text" id="inviteCode" class="form-control" v-model="formData.inviteCode"
+                  :placeholder="$t('auth.inviteCodePlaceholder')" :required="config.is_invite_force === 1"
+                  :disabled="inviteCodeFromUrl" :readonly="inviteCodeFromUrl" />
 
               </div>
 
@@ -441,15 +329,7 @@
 
             <div class="form-group">
 
-              <button
-
-                type="submit"
-
-                class="btn btn-primary btn-block"
-
-                :disabled="loading || !formData.agreeTerms"
-
-              >
+              <button type="submit" class="btn btn-primary btn-block" :disabled="loading || !formData.agreeTerms">
 
                 <span v-if="loading" class="loading-wrapper">
 
@@ -476,11 +356,11 @@
           <div class="auth-footer">
 
             <template v-if="AUTH_CONFIG.showThirdPartyLogin">
-            <div class="auth-divider">
-              <span class="auth-divider-text">{{ $t('auth.thirdPartyLogin') }}</span>
-            </div>
+              <div class="auth-divider">
+                <span class="auth-divider-text">{{ $t('auth.thirdPartyLogin') }}</span>
+              </div>
 
-            <ThirdPartyLogin :config="config" />
+              <ThirdPartyLogin :config="config" />
             </template>
 
             <div class="auth-divider">
@@ -561,21 +441,9 @@
 
     <!-- 自定义弹窗 -->
 
-    <AuthPopup
-
-      :show-popup="showAuthPopup"
-
-      :title="authPopupConfig.title"
-
-      :content="authPopupConfig.content"
-
-      :cooldown-hours="authPopupConfig.cooldownHours"
-
-      :close-wait-seconds="authPopupConfig.closeWaitSeconds"
-
-      @close="handleAuthPopupClose"
-
-    />
+    <AuthPopup :show-popup="showAuthPopup" :title="authPopupConfig.title" :content="authPopupConfig.content"
+      :cooldown-hours="authPopupConfig.cooldownHours" :close-wait-seconds="authPopupConfig.closeWaitSeconds"
+      @close="handleAuthPopupClose" />
 
   </div>
 
@@ -585,440 +453,1005 @@
 
 <script>
 
-import { reactive, ref, onMounted, onBeforeUnmount, computed, getCurrentInstance, onActivated } from 'vue';
+  import { reactive, ref, onMounted, onBeforeUnmount, computed, getCurrentInstance, onActivated } from 'vue';
 
-import { useRouter } from 'vue-router';
+  import { useRouter } from 'vue-router';
 
-import { useI18n } from 'vue-i18n';
+  import { useI18n } from 'vue-i18n';
 
-import { useToast } from '@/composables/useToast';
+  import { useToast } from '@/composables/useToast';
 
-import ThemeToggle from '@/components/common/ThemeToggle.vue';
+  import ThemeToggle from '@/components/common/ThemeToggle.vue';
 
-import LanguageSelector from '@/components/common/LanguageSelector.vue';
+  import LanguageSelector from '@/components/common/LanguageSelector.vue';
 
-import { isValidEmail } from '@/utils/validators';
+  import { isValidEmail } from '@/utils/validators';
 
-import IconMail from '@/components/icons/IconMail.vue';
+  import IconMail from '@/components/icons/IconMail.vue';
 
-import IconCode from '@/components/icons/IconCode.vue';
+  import IconCode from '@/components/icons/IconCode.vue';
 
-import IconLock from '@/components/icons/IconLock.vue';
+  import IconLock from '@/components/icons/IconLock.vue';
 
-import IconTicket from '@/components/icons/IconTicket.vue';
+  import IconTicket from '@/components/icons/IconTicket.vue';
 
-import IconSend from '@/components/icons/IconSend.vue';
+  import IconSend from '@/components/icons/IconSend.vue';
 
-import IconArrowRight from '@/components/icons/IconArrowRight.vue';
+  import IconArrowRight from '@/components/icons/IconArrowRight.vue';
 
-import IconEye from '@/components/icons/IconEye.vue';
+  import IconEye from '@/components/icons/IconEye.vue';
 
-import IconEyeOff from '@/components/icons/IconEyeOff.vue';
+  import IconEyeOff from '@/components/icons/IconEyeOff.vue';
 
-import IconChevronDown from '@/components/icons/IconChevronDown.vue';
+  import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 
-import { register, checkLoginStatus, getWebsiteConfig, sendEmailVerify } from '@/api/auth';
+  import { register, checkLoginStatus, getWebsiteConfig, sendEmailVerify } from '@/api/auth';
 
 
 
-import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
+  import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
 
-import { CAPTCHA_CONFIG, AUTH_LAYOUT_CONFIG, SITE_CONFIG, AUTH_CONFIG } from '@/utils/baseConfig';
+  import { CAPTCHA_CONFIG, AUTH_LAYOUT_CONFIG, SITE_CONFIG, AUTH_CONFIG } from '@/utils/baseConfig';
 
-import AuthPopup from '@/components/auth/AuthPopup.vue';
+  import AuthPopup from '@/components/auth/AuthPopup.vue';
 
-import { shouldShowAuthPopup } from '@/utils/authPopupState';
+  import { shouldShowAuthPopup } from '@/utils/authPopupState';
 
-import { useNavigator } from "@/composables/useNavigator";
+  import { useNavigator } from "@/composables/useNavigator";
 
-import ThirdPartyLogin from '../components/ThirdPartyLogin.vue';
+  import ThirdPartyLogin from '../components/ThirdPartyLogin.vue';
 
 
 
-window.onCaptchaVerified = function(response) {
+  window.onCaptchaVerified = function (response) {
 
-  if (window._registerInstance) {
+    if (window._registerInstance) {
 
-    window._registerInstance.handleCaptchaResponse(response);
+      window._registerInstance.handleCaptchaResponse(response);
 
-  }
+    }
 
-};
+  };
 
 
 
-window.onCaptchaModalVerified = function(response) {
+  window.onCaptchaModalVerified = function (response) {
 
-  if (window._registerInstance) {
+    if (window._registerInstance) {
 
-    window._registerInstance.handleCaptchaModalResponse(response);
+      window._registerInstance.handleCaptchaModalResponse(response);
 
-  }
+    }
 
-};
+  };
 
 
 
-let isGoogleRecaptchaRendered = false;
+  let isGoogleRecaptchaRendered = false;
 
 
 
-const getTimeBasedGreeting = () => {
+  const getTimeBasedGreeting = () => {
 
-  const hour = new Date().getHours();
+    const hour = new Date().getHours();
 
 
 
-  if (hour >= 5 && hour < 12) {
+    if (hour >= 5 && hour < 12) {
 
-    return 'Good Morning';
+      return 'Good Morning';
 
-  } else if (hour >= 12 && hour < 18) {
+    } else if (hour >= 12 && hour < 18) {
 
-    return 'Good Afternoon';
+      return 'Good Afternoon';
 
-  } else if (hour >= 18 && hour < 22) {
+    } else if (hour >= 18 && hour < 22) {
 
-    return 'Good Evening';
+      return 'Good Evening';
 
-  } else {
+    } else {
 
-    return 'Good Night';
+      return 'Good Night';
 
-  }
+    }
 
-};
+  };
 
 
 
-export default {
+  export default {
 
-  name: 'RegisterView',
+    name: 'RegisterView',
 
-  components: {
+    components: {
 
-    ThemeToggle,
+      ThemeToggle,
 
-    LanguageSelector,
+      LanguageSelector,
 
-    IconMail,
+      IconMail,
 
-    IconCode,
+      IconCode,
 
-    IconLock,
+      IconLock,
 
-    IconTicket,
+      IconTicket,
 
-    IconSend,
+      IconSend,
 
-    IconArrowRight,
+      IconArrowRight,
 
-    IconEye,
+      IconEye,
 
-    IconEyeOff,
+      IconEyeOff,
 
-    IconChevronDown,
+      IconChevronDown,
 
-    DomainAuthAlert,
+      DomainAuthAlert,
 
-    AuthPopup,
+      AuthPopup,
 
-    ThirdPartyLogin,
+      ThirdPartyLogin,
 
-  },
+    },
 
-  setup() {
+    setup() {
 
-    const { t } = useI18n();
+      const { t } = useI18n();
 
-    const router = useRouter();
+      const router = useRouter();
 
-    const { showToast } = useToast();
+      const { showToast } = useToast();
 
-    const { goTo } = useNavigator()
+      const { goTo } = useNavigator()
 
 
-    const loading = ref(false);
+      const loading = ref(false);
 
-    const configLoading = ref(false);
+      const configLoading = ref(false);
 
-    const codeSent = ref(false);
+      const codeSent = ref(false);
 
-    const cooldown = ref(0);
+      const cooldown = ref(0);
 
-    const inviteCodeFromUrl = ref(false);
+      const inviteCodeFromUrl = ref(false);
 
 
 
-    const showCaptchaModal = ref(false);
+      const showCaptchaModal = ref(false);
 
-    const captchaModalResponse = ref('');
+      const captchaModalResponse = ref('');
 
-    const isClosingModal = ref(false);
+      const isClosingModal = ref(false);
 
 
 
-    const showAuthPopup = ref(false);
+      const showAuthPopup = ref(false);
 
-    const authPopupConfig = reactive({
+      const authPopupConfig = reactive({
 
-      title: AUTH_CONFIG.popup?.title || '',
+        title: AUTH_CONFIG.popup?.title || '',
 
-      content: AUTH_CONFIG.popup?.content || '',
+        content: AUTH_CONFIG.popup?.content || '',
 
-      cooldownHours: AUTH_CONFIG.popup?.cooldownHours || 24,
+        cooldownHours: AUTH_CONFIG.popup?.cooldownHours || 24,
 
-      closeWaitSeconds: AUTH_CONFIG.popup?.closeWaitSeconds || 0
+        closeWaitSeconds: AUTH_CONFIG.popup?.closeWaitSeconds || 0
 
-    });
+      });
 
 
 
-    const handleAuthPopupClose = () => {
+      const handleAuthPopupClose = () => {
 
-      showAuthPopup.value = false;
+        showAuthPopup.value = false;
 
-    };
+      };
 
 
 
-    const logoPath = ref('./images/logo.png');
+      const logoPath = ref('./images/logo.png');
 
-    const handleLogoError = () => {
+      const handleLogoError = () => {
 
-      logoPath.value = '/images/logo.png';
+        logoPath.value = '/images/logo.png';
 
-    };
+      };
 
 
 
-    // 监听来自验证窗口的消息
-    const handleMessage = (event) => {
-      console.log('收到消息:', event);
-      // 验证消息来源
-      if (event.origin !== window.location.origin) {
-        console.log('消息来源不匹配:', event.origin, window.location.origin);
-        return;
-      }
-
-      if (event.data && event.data.type === 'oauth_login_success') {
-        console.log('收到OAuth登录成功消息:', event.data);
-        const { token, is_admin, auth_data } = event.data.data;
-        if (token) {
-          localStorage.setItem('token', token);
-          localStorage.setItem('is_admin', is_admin);
-          localStorage.setItem('auth_data', auth_data);
-
-          window.location.reload();
+      // 监听来自验证窗口的消息
+      const handleMessage = (event) => {
+        console.log('收到消息:', event);
+        // 验证消息来源
+        if (event.origin !== window.location.origin) {
+          console.log('消息来源不匹配:', event.origin, window.location.origin);
+          return;
         }
-      }
-    };
+
+        if (event.data && event.data.type === 'oauth_login_success') {
+          console.log('收到OAuth登录成功消息:', event.data);
+          const { token, is_admin, auth_data } = event.data.data;
+          if (token) {
+            localStorage.setItem('token', token);
+            localStorage.setItem('is_admin', is_admin);
+            localStorage.setItem('auth_data', auth_data);
+
+            window.location.reload();
+          }
+        }
+      };
 
 
 
-    const leftSideStyles = computed(() => {
+      const leftSideStyles = computed(() => {
 
-      const backgroundImage = AUTH_LAYOUT_CONFIG?.splitLayout?.leftContent?.backgroundImage || '';
+        const backgroundImage = AUTH_LAYOUT_CONFIG?.splitLayout?.leftContent?.backgroundImage || '';
 
 
 
-      if (backgroundImage) {
+        if (backgroundImage) {
 
-        return {
+          return {
 
-          'background-image': `url(${backgroundImage})`,
+            'background-image': `url(${backgroundImage})`,
 
-          'background-position': 'center',
+            'background-position': 'center',
 
-          'background-size': 'cover',
+            'background-size': 'cover',
 
-          'background-repeat': 'no-repeat'
+            'background-repeat': 'no-repeat'
+
+          };
+
+        } else {
+
+          return { background: 'var(--theme-color)' };
+
+        }
+
+      });
+
+
+
+      const showSiteName = computed(() => {
+
+        return AUTH_LAYOUT_CONFIG?.splitLayout?.leftContent?.siteName?.show !== false;
+
+      });
+
+
+
+      const siteNameColorClass = computed(() => {
+
+        const color = AUTH_LAYOUT_CONFIG?.splitLayout?.leftContent?.siteName?.color || 'white';
+
+        return color.toLowerCase() === 'black' ? 'black' : 'white';
+
+      });
+
+
+
+      const config = reactive({
+
+        tos_url: '',
+
+        is_email_verify: 0,
+
+        is_invite_force: 0,
+
+        email_whitelist_suffix: [],
+
+        is_recaptcha: 0,
+
+        recaptcha_site_key: '',
+
+        app_description: '',
+
+        app_url: ''
+
+      });
+
+
+
+      const captchaConfig = reactive({
+
+        type: CAPTCHA_CONFIG.captchaType,
+
+        siteKey: CAPTCHA_CONFIG[CAPTCHA_CONFIG.captchaType]?.siteKey || '',
+
+        verifyUrl: CAPTCHA_CONFIG[CAPTCHA_CONFIG.captchaType]?.verifyUrl || ''
+
+      });
+
+
+
+      const captchaResponse = ref('');
+
+      const app = getCurrentInstance();
+
+
+
+      if (app && app.proxy) {
+
+        window._registerInstance = {
+
+          handleCaptchaResponse: (response) => {
+
+            captchaResponse.value = response;
+
+          },
+
+          handleCaptchaModalResponse: (response) => {
+
+
+
+            if (response && typeof response === 'string' && response.trim().length > 0) {
+
+              captchaModalResponse.value = response;
+
+
+
+              setTimeout(() => {
+
+                closeCaptchaModal();
+
+                sendVerificationCodeWithCaptcha(response);
+
+              }, 100);
+
+            }
+
+          }
 
         };
 
-      } else {
-
-        return { background: 'var(--theme-color)' };
-
       }
 
-    });
+
+
+      const emailPrefix = ref('');
+
+      const selectedSuffix = ref('');
+
+      const showSuffixDropdown = ref(false);
 
 
 
-    const showSiteName = computed(() => {
+      const formData = reactive({
 
-      return AUTH_LAYOUT_CONFIG?.splitLayout?.leftContent?.siteName?.show !== false;
+        email: '',
 
-    });
+        verificationCode: '',
 
+        password: '',
 
+        confirmPassword: '',
 
-    const siteNameColorClass = computed(() => {
+        inviteCode: '',
 
-      const color = AUTH_LAYOUT_CONFIG?.splitLayout?.leftContent?.siteName?.color || 'white';
+        agreeTerms: AUTH_CONFIG.autoAgreeTerms
 
-      return color.toLowerCase() === 'black' ? 'black' : 'white';
-
-    });
-
-
-
-    const config = reactive({
-
-      tos_url: '',
-
-      is_email_verify: 0,
-
-      is_invite_force: 0,
-
-      email_whitelist_suffix: [],
-
-      is_recaptcha: 0,
-
-      recaptcha_site_key: '',
-
-      app_description: '',
-
-      app_url: ''
-
-    });
+      });
 
 
 
-    const captchaConfig = reactive({
+      const errors = reactive({
 
-      type: CAPTCHA_CONFIG.captchaType,
+        email: '',
 
-      siteKey: '',
+        verificationCode: '',
 
-      verifyUrl: CAPTCHA_CONFIG[CAPTCHA_CONFIG.captchaType]?.verifyUrl || ''
+        password: '',
 
-    });
+        confirmPassword: '',
 
+        inviteCode: '',
 
+        agreeTerms: ''
 
-    const captchaResponse = ref('');
-
-    const app = getCurrentInstance();
-
-
-
-    if (app && app.proxy) {
-
-      window._registerInstance = {
-
-        handleCaptchaResponse: (response) => {
-
-          captchaResponse.value = response;
-
-        },
-
-        handleCaptchaModalResponse: (response) => {
+      });
 
 
 
-          if (response && typeof response === 'string' && response.trim().length > 0) {
+      const showPassword = ref(false);
 
-            captchaModalResponse.value = response;
+      const showConfirmPassword = ref(false);
 
 
 
-            setTimeout(() => {
+      const needCaptchaForEmailVerify = computed(() => {
 
-              closeCaptchaModal();
+        return config.is_recaptcha === 1;
 
-              sendVerificationCodeWithCaptcha(response);
+      });
 
-            }, 100);
+
+
+      const fetchWebsiteConfig = async () => {
+
+        try {
+
+          if (window.EZ_CONFIG.API_CONFIG.showCheckBackend) {
+            configLoading.value = true;
+          }
+
+          const response = await getWebsiteConfig();
+
+          if (response && response.data) {
+
+            Object.assign(config, response.data);
+
+
+
+            if (Array.isArray(config.email_whitelist_suffix) && config.email_whitelist_suffix.length > 0) {
+
+              selectedSuffix.value = config.email_whitelist_suffix[0];
+
+            }
+
+
+
+            if (config.is_recaptcha === 1) {
+
+              captchaConfig.siteKey =
+                config.recaptcha_site_key ||
+                CAPTCHA_CONFIG[CAPTCHA_CONFIG.captchaType]?.siteKey ||
+                '';
+
+            }
 
           }
+
+        } catch (error) {
+
+          showToast(t('messages.configLoadFailed'), 'error');
+
+        } finally {
+
+          configLoading.value = false;
 
         }
 
       };
 
-    }
 
 
+      const handleClickOutside = (event) => {
 
-    const emailPrefix = ref('');
+        const suffixDropdown = document.querySelector('.email-suffix');
 
-    const selectedSuffix = ref('');
+        if (suffixDropdown && !suffixDropdown.contains(event.target)) {
 
-    const showSuffixDropdown = ref(false);
+          showSuffixDropdown.value = false;
 
-
-
-    const formData = reactive({
-
-      email: '',
-
-      verificationCode: '',
-
-      password: '',
-
-      confirmPassword: '',
-
-      inviteCode: '',
-
-      agreeTerms: AUTH_CONFIG.autoAgreeTerms
-
-    });
-
-
-
-    const errors = reactive({
-
-      email: '',
-
-      verificationCode: '',
-
-      password: '',
-
-      confirmPassword: '',
-
-      inviteCode: '',
-
-      agreeTerms: ''
-
-    });
-
-
-
-    const showPassword = ref(false);
-
-    const showConfirmPassword = ref(false);
-
-
-
-    const needCaptchaForEmailVerify = computed(() => {
-
-      return config.is_recaptcha === 1;
-
-    });
-
-
-
-    const fetchWebsiteConfig = async () => {
-
-      try {
-
-        if(window.EZ_CONFIG.API_CONFIG.showCheckBackend) {
-          configLoading.value = true;
         }
 
-        const response = await getWebsiteConfig();
-
-        if (response && response.data) {
-
-          Object.assign(config, response.data);
+      };
 
 
 
-          if (Array.isArray(config.email_whitelist_suffix) && config.email_whitelist_suffix.length > 0) {
+      const toggleSuffixDropdown = (event) => {
 
-            selectedSuffix.value = config.email_whitelist_suffix[0];
+        event.stopPropagation();
+
+        showSuffixDropdown.value = !showSuffixDropdown.value;
+
+      };
+
+
+
+      const selectSuffix = (suffix) => {
+
+        selectedSuffix.value = suffix;
+
+        showSuffixDropdown.value = false;
+
+        updateEmail();
+
+      };
+
+
+
+      const updateEmail = () => {
+
+        if (emailPrefix.value && selectedSuffix.value) {
+
+          formData.email = `${emailPrefix.value}@${selectedSuffix.value}`;
+
+        } else {
+
+          formData.email = emailPrefix.value;
+
+        }
+
+      };
+
+
+
+      const handleEmailPrefixChange = () => {
+
+        updateEmail();
+
+      };
+
+
+
+      const showCaptchaModalDialog = () => {
+
+        showCaptchaModal.value = true;
+
+        captchaModalResponse.value = '';
+
+
+
+        const renderModalCaptcha = async () => {
+
+          setTimeout(() => {
+
+            if (captchaConfig.type === 'google' && window.grecaptcha) {
+
+              const container = document.getElementById('modal-recaptcha');
+
+              if (container) {
+
+                container.innerHTML = '';
+
+
+
+                window.grecaptcha.render('modal-recaptcha', {
+
+                  'sitekey': captchaConfig.siteKey,
+
+                  'callback': 'onCaptchaModalVerified',
+
+                  'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light'
+
+                });
+
+              }
+
+            } else if (captchaConfig.type === 'cloudflare' && window.turnstile) {
+
+              const container = document.getElementById('modal-turnstile');
+
+              if (container) {
+
+                container.innerHTML = '';
+
+
+
+                if (window.turnstile.reset) {
+
+                  try {
+
+                    window.turnstile.reset();
+
+                  } catch (e) {
+
+                    console.log('无法重置Turnstile验证码，将重新渲染');
+
+                  }
+
+                }
+
+
+
+                try {
+
+                  window.turnstile.render('#modal-turnstile', {
+
+                    'sitekey': captchaConfig.siteKey,
+
+                    'callback': function (token) {
+
+                      if (window._registerInstance) {
+
+                        window._registerInstance.handleCaptchaModalResponse(token);
+
+                      }
+
+                    },
+
+                    'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light',
+
+                    'retry': 'auto',
+                    'retry-interval': 5000,
+                    'refresh-expired': 'manual',
+                    'tabindex': 0,
+                    'execution': 'render'
+                  });
+
+                } catch (error) {
+
+                  console.error('Turnstile渲染错误:', error);
+
+
+
+                  const scripts = document.getElementsByTagName('script');
+
+                  for (let i = scripts.length - 1; i >= 0; i--) {
+
+                    if (scripts[i].src.includes('turnstile')) {
+
+                      scripts[i].parentNode.removeChild(scripts[i]);
+
+                    }
+
+                  }
+
+
+
+                  setTimeout(() => {
+
+                    const script = document.createElement('script');
+
+                    script.src = `https://challenges.cloudflare.com/turnstile/v0/api.js?onload=captchaScriptLoaded&render=explicit`;
+
+                    script.async = true;
+
+                    script.defer = true;
+
+                    document.head.appendChild(script);
+
+                  }, 500);
+
+                }
+
+              } else {
+
+                console.error('找不到modal-turnstile容器');
+
+              }
+
+            } else {
+
+              console.error('验证码脚本未加载或配置不正确', {
+
+                type: captchaConfig.type,
+
+                hasGoogle: !!window.grecaptcha,
+
+                hasTurnstile: !!window.turnstile
+
+              });
+
+            }
+
+          }, 300);
+        };
+
+
+
+        renderModalCaptcha();
+
+      };
+
+
+
+      const closeCaptchaModal = () => {
+
+        isClosingModal.value = true;
+
+
+
+        setTimeout(() => {
+
+          showCaptchaModal.value = false;
+
+          isClosingModal.value = false;
+
+        }, 300);
+
+      };
+
+
+
+      const sendVerificationCodeWithCaptcha = async (captchaData) => {
+
+        try {
+
+          loading.value = true;
+
+
+
+          const sendData = {
+
+            email: formData.email,
+
+            isForgetPassword: false
+
+          };
+
+
+
+          if (captchaData) {
+
+            sendData.recaptcha_data = captchaData;
+
+          }
+
+
+
+          const response = await sendEmailVerify(sendData);
+
+
+
+          if (response && response.data === true) {
+
+            codeSent.value = true;
+
+            startCooldown();
+
+            showToast(response.message || t('auth.codeSent'), 'success');
+
+
+
+            if (AUTH_CONFIG.verificationCode && AUTH_CONFIG.verificationCode.showCheckSpamTip) {
+
+              const delay = AUTH_CONFIG.verificationCode.checkSpamTipDelay || 1000;
+
+              setTimeout(() => {
+
+                showToast(t('auth.checkSpam'), 'info');
+
+              }, delay);
+
+            }
+
+          } else {
+
+            throw new Error(response.message || t('auth.sendCodeFailed'));
+
+          }
+
+        } catch (error) {
+
+          showToast(error.response?.message || error.message || t('auth.sendCodeFailed'), 'error');
+
+        } finally {
+
+          loading.value = false;
+
+        }
+
+      };
+
+
+
+      const sendVerificationCode = async () => {
+
+        errors.email = '';
+
+
+
+        if (!formData.email) {
+
+          errors.email = t('auth.emailRequired');
+
+          return;
+
+        }
+
+
+
+        if (!isValidEmail(formData.email)) {
+
+          errors.email = t('auth.emailInvalid');
+
+          return;
+
+        }
+
+
+
+        if (config.is_recaptcha === 1 && captchaConfig.siteKey) {
+
+          showCaptchaModalDialog();
+
+        } else {
+
+          sendVerificationCodeWithCaptcha();
+
+        }
+
+      };
+
+
+
+      const startCooldown = () => {
+
+        cooldown.value = 60;
+
+        const timer = setInterval(() => {
+
+          cooldown.value--;
+
+          if (cooldown.value <= 0) {
+
+            clearInterval(timer);
+
+          }
+
+        }, 1000);
+
+      };
+
+
+
+      const validateForm = () => {
+
+        let isValid = true;
+
+
+
+        errors.email = '';
+
+        errors.verificationCode = '';
+
+        errors.password = '';
+
+        errors.confirmPassword = '';
+
+        errors.inviteCode = '';
+
+        errors.agreeTerms = '';
+
+
+
+        if (config.is_email_verify !== 1) {
+
+          formData.verificationCode = '';
+
+        }
+
+
+
+        if (!formData.email) {
+
+          errors.email = t('auth.emailRequired');
+
+          isValid = false;
+
+        } else if (!isValidEmail(formData.email)) {
+
+          errors.email = t('auth.emailInvalid');
+
+          isValid = false;
+
+        }
+
+
+
+        if (config.is_email_verify === 1) {
+
+          if (!formData.verificationCode) {
+
+            errors.verificationCode = t('auth.codeRequired');
+
+            isValid = false;
+
+          }
+
+        }
+
+
+
+        if (!formData.password) {
+
+          errors.password = t('auth.passwordRequired');
+
+          isValid = false;
+
+        } else if (formData.password.length < 8) {
+
+          errors.password = t('auth.passwordTooShort');
+
+          isValid = false;
+
+        }
+
+
+
+        if (!formData.confirmPassword) {
+
+          errors.confirmPassword = t('auth.confirmPasswordRequired');
+
+          isValid = false;
+
+        } else if (formData.password !== formData.confirmPassword) {
+
+          errors.confirmPassword = t('auth.passwordsDoNotMatch');
+
+          isValid = false;
+
+        }
+
+
+
+        if (config.is_invite_force === 1 && !formData.inviteCode) {
+
+          errors.inviteCode = t('auth.inviteCodeRequired');
+
+          isValid = false;
+
+        }
+
+
+
+        if (!formData.agreeTerms) {
+
+          errors.agreeTerms = t('auth.mustAgreeToTerms');
+
+          isValid = false;
+
+        }
+
+
+
+        if (config.is_recaptcha === 1) {
+
+          const formCaptchaElement = document.querySelector('[name="g-recaptcha-response"]') ||
+
+            document.querySelector('[name="cf-turnstile-response"]');
+
+
+
+          const isCaptchaVerified = !!formCaptchaElement?.value || !!captchaResponse.value;
+
+
+
+          if (!isCaptchaVerified) {
+
+            showToast(t('auth.captchaRequired'), 'error');
+
+            isValid = false;
+
+          }
+
+        }
+
+
+
+        return isValid;
+
+      };
+
+
+
+      const handleRegister = async () => {
+
+        if (!validateForm()) return;
+
+
+
+        try {
+
+          loading.value = true;
+
+
+
+          const registerData = {
+
+            email: formData.email,
+
+            password: formData.password
+
+          };
+
+
+
+          if (config.is_email_verify === 1) {
+
+            registerData.email_code = parseInt(formData.verificationCode);
+
+          }
+
+
+
+          if (formData.inviteCode) {
+
+            registerData.invite_code = formData.inviteCode;
 
           }
 
@@ -1026,176 +1459,253 @@ export default {
 
           if (config.is_recaptcha === 1) {
 
-            captchaConfig.siteKey = config.recaptcha_site_key;
+            const formCaptchaElement = document.querySelector('[name="g-recaptcha-response"]') ||
 
-          }
-
-        }
-
-      } catch (error) {
-
-        showToast(t('messages.configLoadFailed'), 'error');
-
-      } finally {
-
-        configLoading.value = false;
-
-      }
-
-    };
+              document.querySelector('[name="cf-turnstile-response"]');
 
 
 
-    const handleClickOutside = (event) => {
+            if (formCaptchaElement && formCaptchaElement.value) {
 
-      const suffixDropdown = document.querySelector('.email-suffix');
+              registerData.recaptcha_data = formCaptchaElement.value;
 
-      if (suffixDropdown && !suffixDropdown.contains(event.target)) {
+            } else if (captchaResponse.value) {
 
-        showSuffixDropdown.value = false;
-
-      }
-
-    };
-
-
-
-    const toggleSuffixDropdown = (event) => {
-
-      event.stopPropagation();
-
-      showSuffixDropdown.value = !showSuffixDropdown.value;
-
-    };
-
-
-
-    const selectSuffix = (suffix) => {
-
-      selectedSuffix.value = suffix;
-
-      showSuffixDropdown.value = false;
-
-      updateEmail();
-
-    };
-
-
-
-    const updateEmail = () => {
-
-      if (emailPrefix.value && selectedSuffix.value) {
-
-        formData.email = `${emailPrefix.value}@${selectedSuffix.value}`;
-
-      } else {
-
-        formData.email = emailPrefix.value;
-
-      }
-
-    };
-
-
-
-    const handleEmailPrefixChange = () => {
-
-      updateEmail();
-
-    };
-
-
-
-    const showCaptchaModalDialog = () => {
-
-      showCaptchaModal.value = true;
-
-      captchaModalResponse.value = '';
-
-
-
-      const renderModalCaptcha = async () => {
-
-        setTimeout(() => {
-
-          if (captchaConfig.type === 'google' && window.grecaptcha) {
-
-            const container = document.getElementById('modal-recaptcha');
-
-            if (container) {
-
-              container.innerHTML = '';
-
-
-
-              window.grecaptcha.render('modal-recaptcha', {
-
-                'sitekey': captchaConfig.siteKey,
-
-                'callback': 'onCaptchaModalVerified',
-
-                'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light'
-
-              });
+              registerData.recaptcha_data = captchaResponse.value;
 
             }
 
-          } else if (captchaConfig.type === 'cloudflare' && window.turnstile) {
-
-            const container = document.getElementById('modal-turnstile');
-
-            if (container) {
-
-              container.innerHTML = '';
+          }
 
 
 
-              if (window.turnstile.reset) {
-
-                try {
-
-                  window.turnstile.reset();
-
-                } catch (e) {
-
-                  console.log('无法重置Turnstile验证码，将重新渲染');
-
-                }
-
-              }
+          const response = await register(registerData);
 
 
+
+          showToast(response.message || t('auth.registerSuccess'), 'success');
+
+
+
+          setTimeout(() => {
+
+            router.push('/dashboard');
+
+          }, 300);
+
+        } catch (error) {
+
+          showToast(error.response?.message || error.message || t('auth.registerFailed'), 'error');
+
+          if (window.grecaptcha) {
+
+            window.grecaptcha.reset();
+
+          }
+
+        } finally {
+
+          loading.value = false;
+
+        }
+
+      };
+
+
+
+      onMounted(() => {
+        // 监听来自验证窗口的消息
+        window.addEventListener('message', handleMessage);
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const hashParams = new URLSearchParams(window.location.hash.replace('#', '?'));
+
+
+
+        if (urlParams.has('logout') === true || hashParams.has('logout') === true) {
+
+          showToast(t('auth.logoutSuccess'), 'success');
+
+
+
+          if (window.history && window.history.replaceState) {
+
+            const newUrl = window.location.href.replace('?logout=true', '').replace('&logout=true', '');
+
+            window.history.replaceState({}, document.title, newUrl);
+
+          }
+
+
+
+          fetchWebsiteConfig();
+
+          document.addEventListener('click', handleClickOutside);
+
+          return;
+
+        }
+
+
+
+        try {
+
+          if (window._isLoggingOut === true) {
+
+            fetchWebsiteConfig();
+
+            document.addEventListener('click', handleClickOutside);
+
+            return;
+
+          }
+
+
+
+          const loginStatus = checkLoginStatus();
+
+
+
+          if (loginStatus) {
+
+            showToast(t('auth.alreadyLoggedIn'), 'info');
+
+            setTimeout(() => {
+
+              router.push('/dashboard');
+
+            }, 500);
+
+            return;
+
+          }
+
+
+
+          if (urlParams.has('code')) {
+
+            formData.inviteCode = urlParams.get('code');
+
+            inviteCodeFromUrl.value = true;
+
+          } else if (hashParams.has('code')) {
+
+            formData.inviteCode = hashParams.get('code');
+
+            inviteCodeFromUrl.value = true;
+
+          } else {
+
+            const fullUrl = window.location.href;
+
+            const codeMatch = fullUrl.match(/[?&]code=([^&]+)/);
+
+            if (codeMatch && codeMatch[1]) {
+
+              formData.inviteCode = codeMatch[1];
+
+              inviteCodeFromUrl.value = true;
+
+            }
+
+          }
+
+        } catch (error) {
+
+        }
+
+
+
+        fetchWebsiteConfig().then(() => {
+
+          if (config.is_recaptcha === 1) {
+
+            loadCaptchaScript();
+
+          }
+
+
+
+          showAuthPopup.value = shouldShowAuthPopup(AUTH_CONFIG.popup);
+
+        });
+
+
+
+        document.addEventListener('click', handleClickOutside);
+
+
+
+        window.addEventListener('focus', () => {
+
+          if (config.is_recaptcha === 1) {
+
+            setTimeout(() => {
+
+              renderFormCaptcha();
+
+            }, 300);
+
+          }
+
+        });
+
+      });
+
+
+
+      onActivated(() => {
+
+        if (config.is_recaptcha === 1 && captchaConfig.type === 'cloudflare' && captchaConfig.siteKey) {
+
+          console.log('注册组件激活，重新加载Cloudflare Turnstile验证组件');
+
+          loadCaptchaScript().then(() => {
+
+            if (window.turnstile && window.turnstile.reset) {
 
               try {
 
-                window.turnstile.render('#modal-turnstile', {
-
-                  'sitekey': captchaConfig.siteKey,
-
-                  'callback': function(token) {
-
-                    if (window._registerInstance) {
-
-                      window._registerInstance.handleCaptchaModalResponse(token);
-
-                    }
-
-                  },
-
-                  'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light',
-
-                  'retry': 'auto',
-                  'retry-interval': 5000,
-                  'refresh-expired': 'manual',
-                  'tabindex': 0,
-                  'execution': 'render'
-                });
-
-              } catch (error) {
-
-                console.error('Turnstile渲染错误:', error);
+                window.turnstile.reset();
 
 
+
+                const formContainer = document.getElementById('form-turnstile');
+
+                if (formContainer && window.turnstile.render) {
+
+                  formContainer.innerHTML = '';
+
+
+
+                  window.turnstile.render('#form-turnstile', {
+
+                    'sitekey': captchaConfig.siteKey,
+
+                    'callback': function (token) {
+
+                      if (window._registerInstance) {
+
+                        window._registerInstance.handleCaptchaResponse(token);
+
+                      }
+
+                    },
+
+                    'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light',
+
+                    'retry': 'auto',
+                    'retry-interval': 5000,
+                    'refresh-expired': 'manual',
+                    'tabindex': 0,
+                    'execution': 'render'
+                  });
+
+                }
+
+              } catch (e) {
+
+                console.log('Turnstile重置失败，将重新渲染验证码组件', e);
 
                 const scripts = document.getElementsByTagName('script');
 
@@ -1227,591 +1737,193 @@ export default {
 
               }
 
-            } else {
-
-              console.error('找不到modal-turnstile容器');
-
             }
 
-          } else {
+          });
 
-            console.error('验证码脚本未加载或配置不正确', {
+        }
 
-              type: captchaConfig.type,
+      });
 
-              hasGoogle: !!window.grecaptcha,
 
-              hasTurnstile: !!window.turnstile
 
-            });
+      onBeforeUnmount(() => {
+        window.removeEventListener('message', handleMessage);
+        document.removeEventListener('click', handleClickOutside);
+
+
+
+        isGoogleRecaptchaRendered = false;
+
+
+
+        if (window.turnstile && window.turnstile.reset) {
+
+          try {
+
+            window.turnstile.reset();
+
+          } catch (e) {
+
+            console.log('Turnstile重置失败', e);
 
           }
 
-        }, 300);
+        }
+
+
+
+        const formTurnstileContainer = document.getElementById('form-turnstile');
+
+        if (formTurnstileContainer) {
+
+          formTurnstileContainer.innerHTML = '';
+
+        }
+
+
+
+        const modalTurnstileContainer = document.getElementById('modal-turnstile');
+
+        if (modalTurnstileContainer) {
+
+          modalTurnstileContainer.innerHTML = '';
+
+        }
+
+
+
+        captchaResponse.value = '';
+
+        captchaModalResponse.value = '';
+
+
+
+        window.captchaScriptLoaded = undefined;
+
+        window.onCaptchaVerified = undefined;
+
+        window.onCaptchaModalVerified = undefined;
+
+
+
+        window._registerInstance = null;
+
+      });
+
+
+
+      const handleCaptchaResponse = (response) => {
+
+        captchaResponse.value = response;
+
       };
 
 
 
-      renderModalCaptcha();
-
-    };
+      const handleCaptchaModalResponse = (response) => {
 
 
 
-    const closeCaptchaModal = () => {
+        if (response && typeof response === 'string' && response.trim().length > 0) {
 
-      isClosingModal.value = true;
-
-
-
-      setTimeout(() => {
-
-        showCaptchaModal.value = false;
-
-        isClosingModal.value = false;
-
-      }, 300);
-
-    };
+          captchaModalResponse.value = response;
 
 
 
-    const sendVerificationCodeWithCaptcha = async (captchaData) => {
+          setTimeout(() => {
 
-      try {
+            closeCaptchaModal();
 
-        loading.value = true;
+            sendVerificationCodeWithCaptcha(response);
 
-
-
-        const sendData = {
-
-          email: formData.email,
-
-          isForgetPassword: false
-
-        };
-
-
-
-        if (captchaData) {
-
-          sendData.recaptcha_data = captchaData;
+          }, 100);
 
         }
 
-
-
-        const response = await sendEmailVerify(sendData);
-
-
-
-        if (response && response.data === true) {
-
-          codeSent.value = true;
-
-          startCooldown();
-
-          showToast(response.message || t('auth.codeSent'), 'success');
+      };
 
 
 
-          if (AUTH_CONFIG.verificationCode && AUTH_CONFIG.verificationCode.showCheckSpamTip) {
+      const renderFormCaptcha = () => {
 
-            const delay = AUTH_CONFIG.verificationCode.checkSpamTipDelay || 1000;
+        if (config.is_recaptcha !== 1 || !captchaConfig.siteKey) {
 
-            setTimeout(() => {
-
-              showToast(t('auth.checkSpam'), 'info');
-
-            }, delay);
-
-          }
-
-        } else {
-
-          throw new Error(response.message || t('auth.sendCodeFailed'));
+          return;
 
         }
-
-      } catch (error) {
-
-        showToast(error.response?.message || error.message || t('auth.sendCodeFailed'), 'error');
-
-      } finally {
-
-        loading.value = false;
-
-      }
-
-    };
-
-
-
-    const sendVerificationCode = async () => {
-
-      errors.email = '';
-
-
-
-      if (!formData.email) {
-
-        errors.email = t('auth.emailRequired');
-
-        return;
-
-      }
-
-
-
-      if (!isValidEmail(formData.email)) {
-
-        errors.email = t('auth.emailInvalid');
-
-        return;
-
-      }
-
-
-
-      if (config.is_recaptcha === 1 && captchaConfig.siteKey) {
-
-        showCaptchaModalDialog();
-
-      } else {
-
-        sendVerificationCodeWithCaptcha();
-
-      }
-
-    };
-
-
-
-    const startCooldown = () => {
-
-      cooldown.value = 60;
-
-      const timer = setInterval(() => {
-
-        cooldown.value--;
-
-        if (cooldown.value <= 0) {
-
-          clearInterval(timer);
-
-        }
-
-      }, 1000);
-
-    };
-
-
-
-    const validateForm = () => {
-
-      let isValid = true;
-
-
-
-      errors.email = '';
-
-      errors.verificationCode = '';
-
-      errors.password = '';
-
-      errors.confirmPassword = '';
-
-      errors.inviteCode = '';
-
-      errors.agreeTerms = '';
-
-
-
-      if (config.is_email_verify !== 1) {
-
-        formData.verificationCode = '';
-
-      }
-
-
-
-      if (!formData.email) {
-
-        errors.email = t('auth.emailRequired');
-
-        isValid = false;
-
-      } else if (!isValidEmail(formData.email)) {
-
-        errors.email = t('auth.emailInvalid');
-
-        isValid = false;
-
-      }
-
-
-
-      if (config.is_email_verify === 1) {
-
-        if (!formData.verificationCode) {
-
-          errors.verificationCode = t('auth.codeRequired');
-
-          isValid = false;
-
-        }
-
-      }
-
-
-
-      if (!formData.password) {
-
-        errors.password = t('auth.passwordRequired');
-
-        isValid = false;
-
-      } else if (formData.password.length < 8) {
-
-        errors.password = t('auth.passwordTooShort');
-
-        isValid = false;
-
-      }
-
-
-
-      if (!formData.confirmPassword) {
-
-        errors.confirmPassword = t('auth.confirmPasswordRequired');
-
-        isValid = false;
-
-      } else if (formData.password !== formData.confirmPassword) {
-
-        errors.confirmPassword = t('auth.passwordsDoNotMatch');
-
-        isValid = false;
-
-      }
-
-
-
-      if (config.is_invite_force === 1 && !formData.inviteCode) {
-
-        errors.inviteCode = t('auth.inviteCodeRequired');
-
-        isValid = false;
-
-      }
-
-
-
-      if (!formData.agreeTerms) {
-
-        errors.agreeTerms = t('auth.mustAgreeToTerms');
-
-        isValid = false;
-
-      }
-
-
-
-      if (config.is_recaptcha === 1) {
-
-        const formCaptchaElement = document.querySelector('[name="g-recaptcha-response"]') ||
-
-                                 document.querySelector('[name="cf-turnstile-response"]');
-
-
-
-        const isCaptchaVerified = !!formCaptchaElement?.value || !!captchaResponse.value;
-
-
-
-        if (!isCaptchaVerified) {
-
-          showToast(t('auth.captchaRequired'), 'error');
-
-          isValid = false;
-
-        }
-
-      }
-
-
-
-      return isValid;
-
-    };
-
-
-
-    const handleRegister = async () => {
-
-      if (!validateForm()) return;
-
-
-
-      try {
-
-        loading.value = true;
-
-
-
-        const registerData = {
-
-          email: formData.email,
-
-          password: formData.password
-
-        };
-
-
-
-        if (config.is_email_verify === 1) {
-
-          registerData.email_code = parseInt(formData.verificationCode);
-
-        }
-
-
-
-        if (formData.inviteCode) {
-
-          registerData.invite_code = formData.inviteCode;
-
-        }
-
-
-
-        if (config.is_recaptcha === 1) {
-
-          const formCaptchaElement = document.querySelector('[name="g-recaptcha-response"]') ||
-
-                                   document.querySelector('[name="cf-turnstile-response"]');
-
-
-
-          if (formCaptchaElement && formCaptchaElement.value) {
-
-            registerData.recaptcha_data = formCaptchaElement.value;
-
-          } else if (captchaResponse.value) {
-
-            registerData.recaptcha_data = captchaResponse.value;
-
-          }
-
-        }
-
-
-
-        const response = await register(registerData);
-
-
-
-        showToast(response.message || t('auth.registerSuccess'), 'success');
 
 
 
         setTimeout(() => {
 
-          router.push('/dashboard');
+          if (captchaConfig.type === 'google' && window.grecaptcha) {
 
-        }, 300);
+            const container = document.getElementById('form-recaptcha');
 
-      } catch (error) {
+            if (container && !isGoogleRecaptchaRendered) {
 
-        showToast(error.response?.message || error.message || t('auth.registerFailed'), 'error');
+              container.innerHTML = '';
 
-        if (window.grecaptcha) {
 
-          window.grecaptcha.reset();
 
-        }
+              try {
 
-      } finally {
+                window.grecaptcha.render('form-recaptcha', {
 
-        loading.value = false;
+                  'sitekey': captchaConfig.siteKey,
 
-      }
+                  'callback': function (token) {
 
-    };
+                    if (window._registerInstance) {
 
+                      window._registerInstance.handleCaptchaResponse(token);
 
+                    }
 
-    onMounted(() => {
-      // 监听来自验证窗口的消息
-      window.addEventListener('message', handleMessage);
-      const urlParams = new URLSearchParams(window.location.search);
+                  },
 
-      const hashParams = new URLSearchParams(window.location.hash.replace('#', '?'));
+                  'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light'
 
+                });
 
+                isGoogleRecaptchaRendered = true;
 
-      if (urlParams.has('logout') === true || hashParams.has('logout') === true) {
+              } catch (error) {
 
-        showToast(t('auth.logoutSuccess'), 'success');
+                console.error('Google reCAPTCHA渲染错误:', error);
 
+                if (error.toString().includes('has already been rendered')) {
 
+                  isGoogleRecaptchaRendered = true;
 
-        if (window.history && window.history.replaceState) {
+                } else {
 
-          const newUrl = window.location.href.replace('?logout=true', '').replace('&logout=true', '');
+                  isGoogleRecaptchaRendered = false;
 
-          window.history.replaceState({}, document.title, newUrl);
+                }
 
-        }
+              }
 
+            }
 
+          } else if (captchaConfig.type === 'cloudflare' && window.turnstile) {
 
-        fetchWebsiteConfig();
+            const container = document.getElementById('form-turnstile');
 
-        document.addEventListener('click', handleClickOutside);
+            if (container) {
 
-        return;
+              container.innerHTML = '';
 
-      }
 
 
-
-      try {
-
-        if (window._isLoggingOut === true) {
-
-          fetchWebsiteConfig();
-
-          document.addEventListener('click', handleClickOutside);
-
-          return;
-
-        }
-
-
-
-        const loginStatus = checkLoginStatus();
-
-
-
-        if (loginStatus) {
-
-          showToast(t('auth.alreadyLoggedIn'), 'info');
-
-          setTimeout(() => {
-
-            router.push('/dashboard');
-
-          }, 500);
-
-          return;
-
-        }
-
-
-
-        if (urlParams.has('code')) {
-
-          formData.inviteCode = urlParams.get('code');
-
-          inviteCodeFromUrl.value = true;
-
-        } else if (hashParams.has('code')) {
-
-          formData.inviteCode = hashParams.get('code');
-
-          inviteCodeFromUrl.value = true;
-
-        } else {
-
-          const fullUrl = window.location.href;
-
-          const codeMatch = fullUrl.match(/[?&]code=([^&]+)/);
-
-          if (codeMatch && codeMatch[1]) {
-
-            formData.inviteCode = codeMatch[1];
-
-            inviteCodeFromUrl.value = true;
-
-          }
-
-        }
-
-      } catch (error) {
-
-      }
-
-
-
-      fetchWebsiteConfig().then(() => {
-
-        if (config.is_recaptcha === 1) {
-
-          loadCaptchaScript();
-
-        }
-
-
-
-        showAuthPopup.value = shouldShowAuthPopup(AUTH_CONFIG.popup);
-
-      });
-
-
-
-      document.addEventListener('click', handleClickOutside);
-
-
-
-      window.addEventListener('focus', () => {
-
-        if (config.is_recaptcha === 1) {
-
-          setTimeout(() => {
-
-            renderFormCaptcha();
-
-          }, 300);
-
-        }
-
-      });
-
-    });
-
-
-
-    onActivated(() => {
-
-      if (config.is_recaptcha === 1 && captchaConfig.type === 'cloudflare' && captchaConfig.siteKey) {
-
-        console.log('注册组件激活，重新加载Cloudflare Turnstile验证组件');
-
-        loadCaptchaScript().then(() => {
-
-          if (window.turnstile && window.turnstile.reset) {
-
-            try {
-
-              window.turnstile.reset();
-
-
-
-              const formContainer = document.getElementById('form-turnstile');
-
-              if (formContainer && window.turnstile.render) {
-
-                formContainer.innerHTML = '';
-
-
+              try {
 
                 window.turnstile.render('#form-turnstile', {
 
                   'sitekey': captchaConfig.siteKey,
 
-                  'callback': function(token) {
+                  'callback': function (token) {
 
                     if (window._registerInstance) {
 
@@ -1830,652 +1942,332 @@ export default {
                   'execution': 'render'
                 });
 
+              } catch (error) {
+
+                console.error('表单验证码渲染错误:', error);
+
+              }
+
+            }
+
+          }
+
+        }, 500);
+      };
+
+
+
+      const loadCaptchaScript = () => {
+
+        return new Promise((resolve) => {
+
+          if (config.is_recaptcha !== 1 || !captchaConfig.siteKey) {
+
+            resolve();
+
+            return;
+
+          }
+
+
+
+          if (window.turnstile && captchaConfig.type === 'cloudflare') {
+
+            console.log('Turnstile已存在，尝试重置而不是重新加载脚本');
+
+
+
+            try {
+
+              if (window.turnstile.reset) {
+
+                window.turnstile.reset();
+
+              }
+
+
+
+              const formContainer = document.getElementById('form-turnstile');
+
+              if (formContainer) {
+
+                formContainer.innerHTML = '';
+
+
+
+                setTimeout(() => {
+
+                  window.turnstile.render('#form-turnstile', {
+
+                    'sitekey': captchaConfig.siteKey,
+
+                    'callback': 'onCaptchaVerified',
+
+                    'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light',
+
+                    'refresh-expired': 'auto'
+
+                  });
+
+
+
+                  resolve();
+
+                }, 100);
+
+                return;
+
               }
 
             } catch (e) {
 
-              console.log('Turnstile重置失败，将重新渲染验证码组件', e);
-
-              const scripts = document.getElementsByTagName('script');
-
-              for (let i = scripts.length - 1; i >= 0; i--) {
-
-                if (scripts[i].src.includes('turnstile')) {
-
-                  scripts[i].parentNode.removeChild(scripts[i]);
-
-                }
-
-              }
-
-
-
-              setTimeout(() => {
-
-                const script = document.createElement('script');
-
-                script.src = `https://challenges.cloudflare.com/turnstile/v0/api.js?onload=captchaScriptLoaded&render=explicit`;
-
-                script.async = true;
-
-                script.defer = true;
-
-                document.head.appendChild(script);
-
-              }, 500);
+              console.error('重置Turnstile失败，将尝试重新加载脚本', e);
 
             }
 
           }
 
-        });
 
-      }
 
-    });
+          const cleanupExistingCaptcha = () => {
 
+            const recaptchaContainer = document.getElementById('form-recaptcha');
 
+            if (recaptchaContainer) {
 
-    onBeforeUnmount(() => {
-      window.removeEventListener('message', handleMessage);
-      document.removeEventListener('click', handleClickOutside);
-
-
-
-      isGoogleRecaptchaRendered = false;
-
-
-
-      if (window.turnstile && window.turnstile.reset) {
-
-        try {
-
-          window.turnstile.reset();
-
-        } catch (e) {
-
-          console.log('Turnstile重置失败', e);
-
-        }
-
-      }
-
-
-
-      const formTurnstileContainer = document.getElementById('form-turnstile');
-
-      if (formTurnstileContainer) {
-
-        formTurnstileContainer.innerHTML = '';
-
-      }
-
-
-
-      const modalTurnstileContainer = document.getElementById('modal-turnstile');
-
-      if (modalTurnstileContainer) {
-
-        modalTurnstileContainer.innerHTML = '';
-
-      }
-
-
-
-      captchaResponse.value = '';
-
-      captchaModalResponse.value = '';
-
-
-
-      window.captchaScriptLoaded = undefined;
-
-      window.onCaptchaVerified = undefined;
-
-      window.onCaptchaModalVerified = undefined;
-
-
-
-      window._registerInstance = null;
-
-    });
-
-
-
-    const handleCaptchaResponse = (response) => {
-
-      captchaResponse.value = response;
-
-    };
-
-
-
-    const handleCaptchaModalResponse = (response) => {
-
-
-
-      if (response && typeof response === 'string' && response.trim().length > 0) {
-
-        captchaModalResponse.value = response;
-
-
-
-        setTimeout(() => {
-
-          closeCaptchaModal();
-
-          sendVerificationCodeWithCaptcha(response);
-
-        }, 100);
-
-      }
-
-    };
-
-
-
-    const renderFormCaptcha = () => {
-
-      if (config.is_recaptcha !== 1 || !captchaConfig.siteKey) {
-
-        return;
-
-      }
-
-
-
-      setTimeout(() => {
-
-        if (captchaConfig.type === 'google' && window.grecaptcha) {
-
-          const container = document.getElementById('form-recaptcha');
-
-          if (container && !isGoogleRecaptchaRendered) {
-
-            container.innerHTML = '';
-
-
-
-            try {
-
-              window.grecaptcha.render('form-recaptcha', {
-
-                'sitekey': captchaConfig.siteKey,
-
-                'callback': function(token) {
-
-                  if (window._registerInstance) {
-
-                    window._registerInstance.handleCaptchaResponse(token);
-
-                  }
-
-                },
-
-                'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light'
-
-              });
-
-              isGoogleRecaptchaRendered = true;
-
-            } catch (error) {
-
-              console.error('Google reCAPTCHA渲染错误:', error);
-
-              if (error.toString().includes('has already been rendered')) {
-
-                isGoogleRecaptchaRendered = true;
-
-              } else {
-
-                isGoogleRecaptchaRendered = false;
-
-              }
-
-            }
-
-          }
-
-        } else if (captchaConfig.type === 'cloudflare' && window.turnstile) {
-
-          const container = document.getElementById('form-turnstile');
-
-          if (container) {
-
-            container.innerHTML = '';
-
-
-
-            try {
-
-              window.turnstile.render('#form-turnstile', {
-
-                'sitekey': captchaConfig.siteKey,
-
-                'callback': function(token) {
-
-                  if (window._registerInstance) {
-
-                    window._registerInstance.handleCaptchaResponse(token);
-
-                  }
-
-                },
-
-                'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light',
-
-                'retry': 'auto',
-                'retry-interval': 5000,
-                'refresh-expired': 'manual',
-                'tabindex': 0,
-                'execution': 'render'
-              });
-
-            } catch (error) {
-
-              console.error('表单验证码渲染错误:', error);
-
-            }
-
-          }
-
-        }
-
-      }, 500);
-    };
-
-
-
-    const loadCaptchaScript = () => {
-
-      return new Promise((resolve) => {
-
-        if (config.is_recaptcha !== 1 || !config.recaptcha_site_key) {
-
-          resolve();
-
-          return;
-
-        }
-
-
-
-        if (window.turnstile && captchaConfig.type === 'cloudflare') {
-
-          console.log('Turnstile已存在，尝试重置而不是重新加载脚本');
-
-
-
-          try {
-
-            if (window.turnstile.reset) {
-
-              window.turnstile.reset();
+              recaptchaContainer.innerHTML = '';
 
             }
 
 
 
-            const formContainer = document.getElementById('form-turnstile');
+            const turnstileContainer = document.getElementById('form-turnstile');
 
-            if (formContainer) {
+            if (turnstileContainer) {
 
-              formContainer.innerHTML = '';
-
-
-
-              setTimeout(() => {
-
-                window.turnstile.render('#form-turnstile', {
-
-                  'sitekey': captchaConfig.siteKey,
-
-                  'callback': 'onCaptchaVerified',
-
-                  'theme': document.body.classList.contains('dark-theme') ? 'dark' : 'light',
-
-                  'refresh-expired': 'auto'
-
-                });
-
-
-
-                resolve();
-
-              }, 100);
-
-              return;
+              turnstileContainer.innerHTML = '';
 
             }
 
-          } catch (e) {
-
-            console.error('重置Turnstile失败，将尝试重新加载脚本', e);
-
-          }
-
-        }
 
 
+            const modalRecaptchaContainer = document.getElementById('modal-recaptcha');
 
-        const cleanupExistingCaptcha = () => {
+            if (modalRecaptchaContainer) {
 
-          const recaptchaContainer = document.getElementById('form-recaptcha');
+              modalRecaptchaContainer.innerHTML = '';
 
-          if (recaptchaContainer) {
-
-            recaptchaContainer.innerHTML = '';
-
-          }
+            }
 
 
 
-          const turnstileContainer = document.getElementById('form-turnstile');
+            const modalTurnstileContainer = document.getElementById('modal-turnstile');
 
-          if (turnstileContainer) {
+            if (modalTurnstileContainer) {
 
-            turnstileContainer.innerHTML = '';
+              modalTurnstileContainer.innerHTML = '';
 
-          }
-
-
-
-          const modalRecaptchaContainer = document.getElementById('modal-recaptcha');
-
-          if (modalRecaptchaContainer) {
-
-            modalRecaptchaContainer.innerHTML = '';
-
-          }
-
-
-
-          const modalTurnstileContainer = document.getElementById('modal-turnstile');
-
-          if (modalTurnstileContainer) {
-
-            modalTurnstileContainer.innerHTML = '';
-
-          }
-
-        };
-
-
-
-        cleanupExistingCaptcha();
-
-
-
-        if (!window.turnstile || captchaConfig.type !== 'cloudflare') {
-
-          const script = document.createElement('script');
-
-
-
-          if (captchaConfig.type === 'google') {
-
-            const googleVerifyUrl = 'https://www.recaptcha.net';
-
-            script.src = `${googleVerifyUrl}/recaptcha/api.js?onload=captchaScriptLoaded&render=explicit`;
-
-          } else if (captchaConfig.type === 'cloudflare') {
-
-            script.src = `https://challenges.cloudflare.com/turnstile/v0/api.js?onload=captchaScriptLoaded&render=explicit`;
-
-          }
-
-
-
-          script.async = true;
-
-          script.defer = true;
-
-
-
-          window.captchaScriptLoaded = () => {
-
-            console.log('验证码脚本加载完成');
-
-            renderFormCaptcha();
-
-            setTimeout(() => {
-
-              resolve();
-
-            }, 100);
+            }
 
           };
 
 
 
-          document.head.appendChild(script);
+          cleanupExistingCaptcha();
 
-        } else {
 
-          renderFormCaptcha();
 
-          resolve();
+          if (!window.turnstile || captchaConfig.type !== 'cloudflare') {
 
-        }
+            const script = document.createElement('script');
+
+
+
+            if (captchaConfig.type === 'google') {
+
+              const googleVerifyUrl = 'https://www.recaptcha.net';
+
+              script.src = `${googleVerifyUrl}/recaptcha/api.js?onload=captchaScriptLoaded&render=explicit`;
+
+            } else if (captchaConfig.type === 'cloudflare') {
+
+              script.src = `https://challenges.cloudflare.com/turnstile/v0/api.js?onload=captchaScriptLoaded&render=explicit`;
+
+            }
+
+
+
+            script.async = true;
+
+            script.defer = true;
+
+
+
+            window.captchaScriptLoaded = () => {
+
+              console.log('验证码脚本加载完成');
+
+              renderFormCaptcha();
+
+              setTimeout(() => {
+
+                resolve();
+
+              }, 100);
+
+            };
+
+
+
+            document.head.appendChild(script);
+
+          } else {
+
+            renderFormCaptcha();
+
+            resolve();
+
+          }
+
+        });
+
+      };
+
+
+
+      const showGreeting = computed(() => {
+
+        return AUTH_LAYOUT_CONFIG?.splitLayout?.leftContent?.greeting?.show !== false;
 
       });
 
-    };
 
 
+      const greetingMessage = computed(() => {
 
-    const showGreeting = computed(() => {
+        return getTimeBasedGreeting();
 
-      return AUTH_LAYOUT_CONFIG?.splitLayout?.leftContent?.greeting?.show !== false;
+      });
 
-    });
 
 
+      const greetingColorClass = computed(() => {
 
-    const greetingMessage = computed(() => {
+        const color = AUTH_LAYOUT_CONFIG?.splitLayout?.leftContent?.greeting?.color || 'white';
 
-      return getTimeBasedGreeting();
+        return color.toLowerCase() === 'black' ? 'black' : 'white';
 
-    });
+      });
 
 
 
-    const greetingColorClass = computed(() => {
+      return {
 
-      const color = AUTH_LAYOUT_CONFIG?.splitLayout?.leftContent?.greeting?.color || 'white';
+        formData,
 
-      return color.toLowerCase() === 'black' ? 'black' : 'white';
+        errors,
 
-    });
+        loading,
 
+        configLoading,
 
+        codeSent,
 
-    return {
+        cooldown,
 
-      formData,
+        sendVerificationCode,
 
-      errors,
+        handleRegister,
 
-      loading,
+        isValidEmail,
 
-      configLoading,
+        showPassword,
 
-      codeSent,
+        showConfirmPassword,
 
-      cooldown,
+        config,
 
-      sendVerificationCode,
+        emailPrefix,
 
-      handleRegister,
+        selectedSuffix,
 
-      isValidEmail,
+        showSuffixDropdown,
 
-      showPassword,
+        toggleSuffixDropdown,
 
-      showConfirmPassword,
+        selectSuffix,
 
-      config,
+        handleEmailPrefixChange,
 
-      emailPrefix,
+        inviteCodeFromUrl,
 
-      selectedSuffix,
 
-      showSuffixDropdown,
+        logoPath,
 
-      toggleSuffixDropdown,
+        handleLogoError,
 
-      selectSuffix,
+        captchaConfig,
 
-      handleEmailPrefixChange,
+        handleCaptchaResponse,
 
-      inviteCodeFromUrl,
+        showCaptchaModal,
 
+        closeCaptchaModal,
 
-      logoPath,
+        handleCaptchaModalResponse,
 
-      handleLogoError,
+        needCaptchaForEmailVerify,
 
-      captchaConfig,
+        isClosingModal,
 
-      handleCaptchaResponse,
+        renderFormCaptcha,
 
-      showCaptchaModal,
+        leftSideStyles,
 
-      closeCaptchaModal,
+        showSiteName,
 
-      handleCaptchaModalResponse,
+        siteNameColorClass,
 
-      needCaptchaForEmailVerify,
+        SITE_CONFIG,
 
-      isClosingModal,
+        showGreeting,
 
-      renderFormCaptcha,
+        greetingMessage,
 
-      leftSideStyles,
+        greetingColorClass,
 
-      showSiteName,
+        showAuthPopup,
 
-      siteNameColorClass,
+        authPopupConfig,
 
-      SITE_CONFIG,
+        handleAuthPopupClose,
 
-      showGreeting,
+        goTo,
 
-      greetingMessage,
+        handleMessage,
 
-      greetingColorClass,
+        AUTH_CONFIG,
 
-      showAuthPopup,
+      };
 
-      authPopupConfig,
+    }
 
-      handleAuthPopupClose,
-
-      goTo,
-
-      handleMessage,
-
-      AUTH_CONFIG,
-
-    };
-
-  }
-
-};
+  };
 
 </script>
 
 
 
 <style lang="scss" scoped>
+  .register-view-container {
 
+    width: 100%;
 
-
-.register-view-container {
-
-  width: 100%;
-
-  height: 100%;
-
-  display: flex;
-
-  flex-direction: column;
-
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  right: 0;
-
-  bottom: 0;
-
-  overflow: hidden;
-
-
-
-  @media (max-width: 992px) {
-
-    overflow-y: auto;
-
-    position: relative;
-
-    min-height: 100vh;
+    height: 100%;
 
     display: flex;
 
     flex-direction: column;
-
-  }
-
-}
-
-
-
-.auth-split-container {
-
-  display: flex;
-
-  width: 100%;
-
-  height: 100%;
-
-  position: relative;
-
-  overflow: hidden;
-
-}
-
-
-
-.auth-split-left {
-
-  flex: 1;
-
-  min-width: 500px;
-
-  position: relative;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  height: 100%;
-
-
-
-  @media (max-width: 992px) {
-
-    display: none;
-
-  }
-
-
-
-  .left-content-overlay {
 
     position: absolute;
 
@@ -2487,465 +2279,49 @@ export default {
 
     bottom: 0;
 
-    background: rgba(0, 0, 0, 0.2);
-
-    z-index: 1;
-
-  }
+    overflow: hidden;
 
 
 
-  .site-name {
+    @media (max-width: 992px) {
 
-    position: absolute;
+      overflow-y: auto;
 
-    top: 30px;
+      position: relative;
 
-    left: 30px;
+      min-height: 100vh;
 
-    font-size: 1.5rem;
+      display: flex;
 
-    font-weight: 700;
-
-    z-index: 2;
-
-    cursor: pointer;
-
-    user-select: none;
-
-
-
-    &.white {
-
-      color: #ffffff;
-
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-
-    }
-
-
-
-    &.black {
-
-      color: #000000;
-
-      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+      flex-direction: column;
 
     }
 
   }
 
-  .greeting-text {
-
-    position: absolute;
-
-    bottom: 30px;
-
-    left: 30px;
-
-    font-size: 1.5rem;
-
-    font-weight: 600;
-
-    z-index: 2;
 
 
-
-    &.white {
-
-      color: #ffffff;
-
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-
-    }
-
-
-
-    &.black {
-
-      color: #000000;
-
-      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
-
-    }
-
-  }
-
-}
-
-
-
-.auth-split-right {
-
-  flex: 0.8;
-
-  min-width: 320px;
-
-  max-width: 520px;
-
-  display: flex;
-
-  flex-direction: column;
-
-
-
-  justify-content: center;
-
-  position: relative;
-
-  background-color: var(--background-color);
-
-  overflow-y: auto;
-
-  height: 100%;
-
-
-
-  @media (max-width: 992px) {
-
-    width: 100%;
-
-    max-width: none;
-
-    flex: 1;
-
-    justify-content: center;
-
-    overflow-y: visible;
+  .auth-split-container {
 
     display: flex;
 
-    padding: 60px 0;
-
-    min-height: 100vh;
-
-  }
-
-}
-
-
-
-
-
-@media (min-width: 993px) and (max-height: 1050px) {
-
-  .auth-split-right {
-
-    justify-content: flex-start;
-
-  }
-
-}
-
-
-
-.top-toolbar {
-
-  position: absolute;
-
-  top: 20px;
-
-  right: 20px;
-
-  display: flex;
-
-  gap: 10px;
-
-  z-index: 10;
-
-
-
-  @media (max-width: 992px) {
-
-    top: 10px;
-
-    right: 10px;
-
-  }
-
-}
-
-
-
-.auth-form-container {
-
-  padding: 40px 40px;
-
-  width: 100%;
-
-  max-width: 420px;
-
-  margin: 0 auto;
-
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-
-
-  @media (max-width: 992px) {
-
-    padding: 20px;
-
-    margin: auto;
-
     width: 100%;
 
-  }
+    height: 100%;
 
-}
+    position: relative;
 
-
-
-.auth-header {
-
-  margin-bottom: 2rem;
-
-  text-align: center;
-
-
-
-  @media (min-width: 993px) {
-
-    text-align: left;
+    overflow: hidden;
 
   }
 
 
 
-  .auth-title {
-
-    font-size: 1.75rem;
-
-    font-weight: 700;
-
-    margin-bottom: 0.5rem;
-
-    color: var(--primary-text-color);
-
-
-
-    @media (min-width: 993px) {
-
-      text-align: left;
-
-    }
-
-  }
-
-
-
-  .auth-subtitle {
-
-    font-size: 1rem;
-
-    color: var(--secondary-text-color);
-
-    margin-bottom: 1.5rem;
-
-
-
-    @media (min-width: 993px) {
-
-      text-align: left;
-
-    }
-
-  }
-
-}
-
-
-
-.loading-container {
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  justify-content: center;
-
-  height: 100%;
-
-  min-height: 100vh;
-
-
-
-  .loading-spinner {
-
-    width: 40px;
-
-    height: 40px;
-
-    border: 3px solid rgba(var(--theme-color-rgb), 0.3);
-
-    border-radius: 50%;
-
-    border-top-color: var(--theme-color);
-
-    animation: spin 1s linear infinite;
-
-    margin-bottom: 16px;
-
-  }
-
-
-
-  p {
-
-    color: var(--secondary-text-color);
-
-    font-size: 1rem;
-
-  }
-
-}
-
-
-
-@keyframes spin {
-
-  from { transform: rotate(0deg); }
-
-  to { transform: rotate(360deg); }
-
-}
-
-
-
-.required {
-
-  color: var(--error-color, #ff4d4f);
-
-  margin-left: 4px;
-
-  font-size: 16px;
-
-  vertical-align: middle;
-
-}
-
-
-
-.optional {
-
-  color: var(--text-muted, #999);
-
-  margin-left: 4px;
-
-  font-size: 12px;
-
-  font-weight: normal;
-
-  vertical-align: baseline;
-
-}
-
-
-
-.input-with-suffix {
-
-  display: flex;
-
-  align-items: stretch;
-
-  width: 100%;
-
-  border-radius: 8px;
-
-  background-color: var(--input-bg-color, #f9f9f9);
-
-  border: 1px solid var(--input-border-color, transparent);
-
-  transition: all 0.3s ease;
-
-  position: relative;
-
-
-
-  &:hover {
-
-    background-color: var(--input-hover-bg-color, #f5f5f5);
-
-  }
-
-
-
-  &:focus-within {
-
-    border-color: var(--theme-color);
-
-    box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
-
-    background-color: var(--input-focus-bg-color, #fff);
-
-  }
-
-
-
-  .email-prefix {
+  .auth-split-left {
 
     flex: 1;
 
-    margin: 0;
-
-
-
-    .form-control {
-
-      border: none;
-
-      border-radius: 8px 0 0 8px;
-
-      height: 45px;
-
-      font-size: 14px;
-
-      letter-spacing: 0.2px;
-
-      background-color: transparent;
-
-
-
-      &:focus {
-
-        box-shadow: none;
-
-      }
-
-    }
-
-  }
-
-
-
-  .email-suffix-separator {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 0 4px;
-
-    color: var(--secondary-text-color);
-
-    font-size: 14px;
-
-    background-color: transparent;
-
-    opacity: 0.8;
-
-  }
-
-
-
-  .email-suffix {
+    min-width: 500px;
 
     position: relative;
 
@@ -2953,33 +2329,417 @@ export default {
 
     align-items: center;
 
-    padding: 0 12px;
+    justify-content: center;
 
-    min-width: 130px;
-
-    cursor: pointer;
-
-    border-left: 1px solid var(--input-border-color, rgba(0, 0, 0, 0.08));
-
-    background-color: transparent;
-
-    transition: all 0.3s ease;
-
-    border-radius: 0 8px 8px 0;
+    height: 100%;
 
 
 
-    &.disabled {
+    @media (max-width: 992px) {
 
-      opacity: 0.7;
-
-      cursor: not-allowed;
+      display: none;
 
     }
 
 
 
-    &:hover:not(.disabled) {
+    .left-content-overlay {
+
+      position: absolute;
+
+      top: 0;
+
+      left: 0;
+
+      right: 0;
+
+      bottom: 0;
+
+      background: rgba(0, 0, 0, 0.2);
+
+      z-index: 1;
+
+    }
+
+
+
+    .site-name {
+
+      position: absolute;
+
+      top: 30px;
+
+      left: 30px;
+
+      font-size: 1.5rem;
+
+      font-weight: 700;
+
+      z-index: 2;
+
+      cursor: pointer;
+
+      user-select: none;
+
+
+
+      &.white {
+
+        color: #ffffff;
+
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+      }
+
+
+
+      &.black {
+
+        color: #000000;
+
+        text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+
+      }
+
+    }
+
+    .greeting-text {
+
+      position: absolute;
+
+      bottom: 30px;
+
+      left: 30px;
+
+      font-size: 1.5rem;
+
+      font-weight: 600;
+
+      z-index: 2;
+
+
+
+      &.white {
+
+        color: #ffffff;
+
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+      }
+
+
+
+      &.black {
+
+        color: #000000;
+
+        text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+
+      }
+
+    }
+
+  }
+
+
+
+  .auth-split-right {
+
+    flex: 0.8;
+
+    min-width: 320px;
+
+    max-width: 520px;
+
+    display: flex;
+
+    flex-direction: column;
+
+
+
+    justify-content: center;
+
+    position: relative;
+
+    background-color: var(--background-color);
+
+    overflow-y: auto;
+
+    height: 100%;
+
+
+
+    @media (max-width: 992px) {
+
+      width: 100%;
+
+      max-width: none;
+
+      flex: 1;
+
+      justify-content: center;
+
+      overflow-y: visible;
+
+      display: flex;
+
+      padding: 60px 0;
+
+      min-height: 100vh;
+
+    }
+
+  }
+
+
+
+
+
+  @media (min-width: 993px) and (max-height: 1050px) {
+
+    .auth-split-right {
+
+      justify-content: flex-start;
+
+    }
+
+  }
+
+
+
+  .top-toolbar {
+
+    position: absolute;
+
+    top: 20px;
+
+    right: 20px;
+
+    display: flex;
+
+    gap: 10px;
+
+    z-index: 10;
+
+
+
+    @media (max-width: 992px) {
+
+      top: 10px;
+
+      right: 10px;
+
+    }
+
+  }
+
+
+
+  .auth-form-container {
+
+    padding: 40px 40px;
+
+    width: 100%;
+
+    max-width: 420px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+
+
+    @media (max-width: 992px) {
+
+      padding: 20px;
+
+      margin: auto;
+
+      width: 100%;
+
+    }
+
+  }
+
+
+
+  .auth-header {
+
+    margin-bottom: 2rem;
+
+    text-align: center;
+
+
+
+    @media (min-width: 993px) {
+
+      text-align: left;
+
+    }
+
+
+
+    .auth-title {
+
+      font-size: 1.75rem;
+
+      font-weight: 700;
+
+      margin-bottom: 0.5rem;
+
+      color: var(--primary-text-color);
+
+
+
+      @media (min-width: 993px) {
+
+        text-align: left;
+
+      }
+
+    }
+
+
+
+    .auth-subtitle {
+
+      font-size: 1rem;
+
+      color: var(--secondary-text-color);
+
+      margin-bottom: 1.5rem;
+
+
+
+      @media (min-width: 993px) {
+
+        text-align: left;
+
+      }
+
+    }
+
+  }
+
+
+
+  .loading-container {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    height: 100%;
+
+    min-height: 100vh;
+
+
+
+    .loading-spinner {
+
+      width: 40px;
+
+      height: 40px;
+
+      border: 3px solid rgba(var(--theme-color-rgb), 0.3);
+
+      border-radius: 50%;
+
+      border-top-color: var(--theme-color);
+
+      animation: spin 1s linear infinite;
+
+      margin-bottom: 16px;
+
+    }
+
+
+
+    p {
+
+      color: var(--secondary-text-color);
+
+      font-size: 1rem;
+
+    }
+
+  }
+
+
+
+  @keyframes spin {
+
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+
+  }
+
+
+
+  .required {
+
+    color: var(--error-color, #ff4d4f);
+
+    margin-left: 4px;
+
+    font-size: 16px;
+
+    vertical-align: middle;
+
+  }
+
+
+
+  .optional {
+
+    color: var(--text-muted, #999);
+
+    margin-left: 4px;
+
+    font-size: 12px;
+
+    font-weight: normal;
+
+    vertical-align: baseline;
+
+  }
+
+
+
+  .input-with-suffix {
+
+    display: flex;
+
+    align-items: stretch;
+
+    width: 100%;
+
+    border-radius: 8px;
+
+    background-color: var(--input-bg-color, #f9f9f9);
+
+    border: 1px solid var(--input-border-color, transparent);
+
+    transition: all 0.3s ease;
+
+    position: relative;
+
+
+
+    &:hover {
 
       background-color: var(--input-hover-bg-color, #f5f5f5);
 
@@ -2987,295 +2747,7 @@ export default {
 
 
 
-    .suffix-text {
-
-      flex: 1;
-
-      white-space: nowrap;
-
-      overflow: hidden;
-
-      text-overflow: ellipsis;
-
-      color: var(--primary-text-color);
-
-      font-size: 14px;
-
-      padding: 0 4px;
-
-      font-weight: 500;
-
-    }
-
-
-
-    .suffix-icon {
-
-      width: 16px;
-
-      height: 16px;
-
-      margin-left: 8px;
-
-      transition: transform 0.3s ease;
-
-      color: var(--secondary-text-color);
-
-      opacity: 0.8;
-
-
-
-      &.rotate-180 {
-
-        transform: rotate(180deg);
-
-      }
-
-    }
-
-
-
-    .suffix-dropdown {
-
-      position: absolute;
-
-      top: calc(100% + 8px);
-
-      left: -1px;
-
-      right: -1px;
-
-      background-color: var(--card-background);
-
-      border-radius: 8px;
-
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-      z-index: 100;
-
-      max-height: 240px;
-
-      overflow-y: auto;
-
-      animation: dropdownFadeIn 0.2s ease;
-
-      border: 1px solid var(--input-border-color, rgba(0, 0, 0, 0.08));
-
-      min-width: 160px;
-
-
-
-      &::-webkit-scrollbar {
-
-        width: 6px;
-
-        height: 6px;
-
-      }
-
-
-
-      &::-webkit-scrollbar-track {
-
-        background: transparent;
-
-        border-radius: 3px;
-
-      }
-
-
-
-      &::-webkit-scrollbar-thumb {
-
-        background-color: var(--scrollbar-thumb-color, rgba(0, 0, 0, 0.2));
-
-        border-radius: 3px;
-
-
-
-        &:hover {
-
-          background-color: var(--scrollbar-thumb-hover-color, rgba(0, 0, 0, 0.3));
-
-        }
-
-      }
-
-
-
-      .suffix-option {
-
-        padding: 10px 16px;
-
-        cursor: pointer;
-
-        transition: all 0.2s;
-
-        color: var(--primary-text-color);
-
-        font-size: 14px;
-
-        display: flex;
-
-        align-items: center;
-
-
-
-        &:hover, &.active {
-
-          background-color: rgba(var(--theme-color-rgb), 0.1);
-
-          color: var(--theme-color);
-
-        }
-
-
-
-        &:first-child {
-
-          border-top-left-radius: 8px;
-
-          border-top-right-radius: 8px;
-
-        }
-
-
-
-        &:last-child {
-
-          border-bottom-left-radius: 8px;
-
-          border-bottom-right-radius: 8px;
-
-        }
-
-      }
-
-    }
-
-  }
-
-}
-
-
-
-@keyframes dropdownFadeIn {
-
-  from {
-
-    opacity: 0;
-
-    transform: translateY(-10px);
-
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform: translateY(0);
-
-  }
-
-}
-
-
-
-.input-with-icon {
-
-  position: relative;
-
-  width: 100%;
-
-
-
-  .input-icon {
-
-    position: absolute;
-
-    left: 12px;
-
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    color: var(--secondary-text-color);
-
-    width: 20px;
-
-    height: 20px;
-
-  }
-
-
-
-  .password-toggle {
-
-    position: absolute;
-
-    right: 12px;
-
-    top: 50%;
-
-    transform: translateY(-50%);
-
-    color: var(--secondary-text-color);
-
-    cursor: pointer;
-
-    padding: 4px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    transition: color 0.2s ease;
-
-
-
-    &:hover {
-
-      color: var(--theme-color);
-
-    }
-
-  }
-
-
-
-  .form-control {
-
-    padding-left: 40px;
-
-    height: 45px;
-
-    border-radius: 8px;
-
-    border: 1px solid var(--input-border-color, transparent);
-
-    background-color: var(--input-bg-color, #f9f9f9);
-
-    transition: all 0.3s ease;
-
-    color: var(--primary-text-color);
-
-
-
-    &[type="password"],
-
-    &[type="text"] {
-
-      padding-right: 40px;
-
-    }
-
-
-
-    &:focus {
-
-      outline: none;
+    &:focus-within {
 
       border-color: var(--theme-color);
 
@@ -3287,283 +2759,33 @@ export default {
 
 
 
-    &::placeholder {
+    .email-prefix {
 
-      color: var(--placeholder-color, #aaa);
+      flex: 1;
 
-    }
+      margin: 0;
 
-  }
 
-}
 
+      .form-control {
 
+        border: none;
 
-.input-with-button {
+        border-radius: 8px 0 0 8px;
 
-  display: flex;
+        height: 45px;
 
-  align-items: stretch;
+        font-size: 14px;
 
-  height: 45px;
+        letter-spacing: 0.2px;
 
-  width: 100%;
+        background-color: transparent;
 
 
 
-  .verification-input {
+        &:focus {
 
-    flex: 1;
-
-
-
-    .form-control {
-
-      border-top-right-radius: 0;
-
-      border-bottom-right-radius: 0;
-
-      height: 100%;
-
-    }
-
-  }
-
-
-
-  .send-code-btn {
-
-    border-top-left-radius: 0;
-
-    border-bottom-left-radius: 0;
-
-    border-top-right-radius: 8px;
-
-    border-bottom-right-radius: 8px;
-
-    padding: 0 15px;
-
-    min-width: 100px;
-
-    white-space: nowrap;
-
-    font-size: 0.875rem;
-
-    border: none;
-
-    background-color: var(--theme-color);
-
-    color: white;
-
-    margin: 0;
-
-    height: 100%;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    cursor: pointer;
-
-    transition: background-color 0.3s, opacity 0.3s, transform 0.3s;
-
-
-
-    &:hover:not(:disabled) {
-
-      background-color: var(--primary-color-hover);
-
-    }
-
-
-
-    &:disabled {
-
-      opacity: 0.6;
-
-      cursor: not-allowed;
-
-      transform: translateY(0);
-
-    }
-
-
-
-    &:not(:disabled) {
-
-      transform: translateY(0);
-
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-
-
-
-      &:hover {
-
-        transform: translateY(-2px);
-
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-
-      }
-
-    }
-
-
-
-    .icon-left {
-
-      margin-right: 5px;
-
-    }
-
-  }
-
-}
-
-
-
-.btn {
-
-  height: 45px;
-
-  border-radius: 8px;
-
-  transition: all 0.3s;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-
-
-  &.btn-primary {
-
-    background-color: var(--theme-color);
-
-    border: none;
-
-    color: white;
-
-    font-weight: 600;
-
-
-
-    &:hover:not(:disabled) {
-
-      background-color: var(--primary-color-hover);
-
-    }
-
-
-
-    &:disabled {
-
-      opacity: 0.6;
-
-      cursor: not-allowed;
-
-    }
-
-
-
-    .icon-right {
-
-      margin-left: 8px;
-
-    }
-
-  }
-
-
-
-  &.btn-secondary {
-
-    position: relative;
-
-    overflow: hidden;
-
-
-
-    &.btn-block {
-
-      transition: all 0.3s ease;
-
-
-
-      &:hover {
-
-        color: var(--theme-color) !important;
-
-        border-color: var(--theme-color) !important;
-
-        background-color: rgba(var(--theme-color-rgb), 0.05) !important;
-
-        -webkit-text-fill-color: var(--theme-color) !important;
-
-        background-image: none !important;
-
-      }
-
-    }
-
-  }
-
-}
-
-
-
-.agreement-checkbox {
-
-  margin-top: 1.5rem;
-
-
-
-  .checkbox-container {
-
-    display: flex;
-
-    align-items: flex-start;
-
-    position: relative;
-
-    padding-left: 30px;
-
-    cursor: pointer;
-
-    font-size: 0.9rem;
-
-    user-select: none;
-
-
-
-    input {
-
-      position: absolute;
-
-      opacity: 0;
-
-      cursor: pointer;
-
-      height: 0;
-
-      width: 0;
-
-
-
-      &:checked ~ .checkmark {
-
-        background-color: var(--theme-color);
-
-        border-color: var(--theme-color);
-
-
-
-        &:after {
-
-          display: block;
+          box-shadow: none;
 
         }
 
@@ -3573,255 +2795,23 @@ export default {
 
 
 
-    .checkmark {
+    .email-suffix-separator {
 
-      position: absolute;
+      display: flex;
 
-      top: 0;
+      align-items: center;
 
-      left: 0;
+      justify-content: center;
 
-      height: 20px;
-
-      width: 20px;
-
-      background-color: transparent;
-
-      border: 2px solid var(--border-color);
-
-      border-radius: 4px;
-
-      transition: all 0.2s ease;
-
-
-
-      &:after {
-
-        content: "";
-
-        position: absolute;
-
-        display: none;
-
-        left: 5px;
-
-        top: 0.5px;
-
-        width: 5px;
-
-        height: 10px;
-
-        border: solid white;
-
-        border-width: 0 2px 2px 0;
-
-        transform: rotate(45deg);
-
-      }
-
-    }
-
-
-
-    .checkbox-label {
+      padding: 0 4px;
 
       color: var(--secondary-text-color);
 
-      font-size: 0.875rem;
+      font-size: 14px;
 
-      line-height: 1.5;
+      background-color: transparent;
 
-
-
-      a {
-
-        position: relative;
-
-        color: var(--theme-color);
-
-        text-decoration: none;
-
-        background: linear-gradient(90deg, var(--theme-color) 0%, var(--theme-hover-color, #4bc8a2) 100%);
-
-        background-size: 200% 100%;
-
-        -webkit-background-clip: text;
-
-        background-clip: text;
-
-        -webkit-text-fill-color: transparent;
-
-        transition: all 0.3s ease-in-out;
-
-
-
-        &:hover {
-
-          background-position: 100% 0;
-
-        }
-
-      }
-
-    }
-
-  }
-
-}
-
-
-
-.error-message {
-
-  display: block;
-
-  color: var(--error-color, #ff4d4f);
-
-  font-size: 0.8rem;
-
-  margin-top: 0.3rem;
-
-}
-
-
-
-
-
-@media (max-width: 576px) {
-
-  .auth-split-right {
-
-    padding: 20px 0;
-
-  }
-
-
-
-  .auth-form-container {
-
-    padding: 30px 20px;
-
-    margin: auto;
-
-  }
-
-
-
-  .auth-header {
-
-    margin-bottom: 1.5rem;
-
-
-
-    .auth-logo img {
-
-      height: 50px;
-
-    }
-
-
-
-    .auth-title {
-
-      font-size: 1.5rem;
-
-    }
-
-  }
-
-
-
-  .input-with-button {
-
-    flex-direction: row;
-
-    height: 45px;
-
-    gap: 0;
-
-
-
-    .verification-input .form-control {
-
-      border-top-right-radius: 0;
-
-      border-bottom-right-radius: 0;
-
-    }
-
-
-
-    .send-code-btn {
-
-      width: auto;
-
-      min-width: 100px;
-
-      border-top-left-radius: 0;
-
-      border-bottom-left-radius: 0;
-
-      border-top-right-radius: 8px;
-
-      border-bottom-right-radius: 8px;
-
-      height: 100%;
-
-    }
-
-  }
-
-}
-
-
-
-
-
-@media (min-width: 576px) and (max-width: 992px) {
-
-  .auth-split-right {
-
-    padding: 2rem;
-
-  }
-
-}
-
-
-
-
-
-.dark-theme {
-
-  .loading-container .loading-spinner {
-
-    color: var(--theme-color);
-
-  }
-
-
-
-  .input-with-suffix {
-
-    background-color: var(--input-bg-color, #333);
-
-    border-color: var(--input-border-color, #444);
-
-
-
-    &:hover {
-
-      background-color: var(--input-hover-bg-color, #383838);
-
-    }
-
-
-
-    &:focus-within {
-
-      border-color: var(--theme-color);
-
-      background-color: var(--input-focus-bg-color, #3a3a3a);
+      opacity: 0.8;
 
     }
 
@@ -3829,13 +2819,89 @@ export default {
 
     .email-suffix {
 
-      border-left-color: var(--input-border-color, #444);
+      position: relative;
+
+      display: flex;
+
+      align-items: center;
+
+      padding: 0 12px;
+
+      min-width: 130px;
+
+      cursor: pointer;
+
+      border-left: 1px solid var(--input-border-color, rgba(0, 0, 0, 0.08));
+
+      background-color: transparent;
+
+      transition: all 0.3s ease;
+
+      border-radius: 0 8px 8px 0;
+
+
+
+      &.disabled {
+
+        opacity: 0.7;
+
+        cursor: not-allowed;
+
+      }
 
 
 
       &:hover:not(.disabled) {
 
-        background-color: var(--input-hover-bg-color, #383838);
+        background-color: var(--input-hover-bg-color, #f5f5f5);
+
+      }
+
+
+
+      .suffix-text {
+
+        flex: 1;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        color: var(--primary-text-color);
+
+        font-size: 14px;
+
+        padding: 0 4px;
+
+        font-weight: 500;
+
+      }
+
+
+
+      .suffix-icon {
+
+        width: 16px;
+
+        height: 16px;
+
+        margin-left: 8px;
+
+        transition: transform 0.3s ease;
+
+        color: var(--secondary-text-color);
+
+        opacity: 0.8;
+
+
+
+        &.rotate-180 {
+
+          transform: rotate(180deg);
+
+        }
 
       }
 
@@ -3843,19 +2909,67 @@ export default {
 
       .suffix-dropdown {
 
+        position: absolute;
+
+        top: calc(100% + 8px);
+
+        left: -1px;
+
+        right: -1px;
+
         background-color: var(--card-background);
 
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
 
-        border-color: var(--input-border-color, #444);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+        z-index: 100;
+
+        max-height: 240px;
+
+        overflow-y: auto;
+
+        animation: dropdownFadeIn 0.2s ease;
+
+        border: 1px solid var(--input-border-color, rgba(0, 0, 0, 0.08));
+
+        min-width: 160px;
 
 
 
-        &:before {
+        &::-webkit-scrollbar {
 
-          background-color: var(--card-background);
+          width: 6px;
 
-          border-color: var(--input-border-color, #444);
+          height: 6px;
+
+        }
+
+
+
+        &::-webkit-scrollbar-track {
+
+          background: transparent;
+
+          border-radius: 3px;
+
+        }
+
+
+
+        &::-webkit-scrollbar-thumb {
+
+          background-color: var(--scrollbar-thumb-color, rgba(0, 0, 0, 0.2));
+
+          border-radius: 3px;
+
+
+
+          &:hover {
+
+            background-color: var(--scrollbar-thumb-hover-color, rgba(0, 0, 0, 0.3));
+
+          }
 
         }
 
@@ -3863,9 +2977,48 @@ export default {
 
         .suffix-option {
 
-          &:hover {
+          padding: 10px 16px;
 
-            background-color: rgba(var(--theme-color-rgb), 0.15);
+          cursor: pointer;
+
+          transition: all 0.2s;
+
+          color: var(--primary-text-color);
+
+          font-size: 14px;
+
+          display: flex;
+
+          align-items: center;
+
+
+
+          &:hover,
+          &.active {
+
+            background-color: rgba(var(--theme-color-rgb), 0.1);
+
+            color: var(--theme-color);
+
+          }
+
+
+
+          &:first-child {
+
+            border-top-left-radius: 8px;
+
+            border-top-right-radius: 8px;
+
+          }
+
+
+
+          &:last-child {
+
+            border-bottom-left-radius: 8px;
+
+            border-bottom-right-radius: 8px;
 
           }
 
@@ -3879,11 +3032,87 @@ export default {
 
 
 
+  @keyframes dropdownFadeIn {
+
+    from {
+
+      opacity: 0;
+
+      transform: translateY(-10px);
+
+    }
+
+    to {
+
+      opacity: 1;
+
+      transform: translateY(0);
+
+    }
+
+  }
+
+
+
   .input-with-icon {
+
+    position: relative;
+
+    width: 100%;
+
+
 
     .input-icon {
 
+      position: absolute;
+
+      left: 12px;
+
+      top: 50%;
+
+      transform: translateY(-50%);
+
       color: var(--secondary-text-color);
+
+      width: 20px;
+
+      height: 20px;
+
+    }
+
+
+
+    .password-toggle {
+
+      position: absolute;
+
+      right: 12px;
+
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      color: var(--secondary-text-color);
+
+      cursor: pointer;
+
+      padding: 4px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      transition: color 0.2s ease;
+
+
+
+      &:hover {
+
+        color: var(--theme-color);
+
+      }
 
     }
 
@@ -3891,17 +3120,41 @@ export default {
 
     .form-control {
 
-      background-color: var(--input-bg-color, #333);
+      padding-left: 40px;
 
-      border-color: var(--input-border-color, #444);
+      height: 45px;
+
+      border-radius: 8px;
+
+      border: 1px solid var(--input-border-color, transparent);
+
+      background-color: var(--input-bg-color, #f9f9f9);
+
+      transition: all 0.3s ease;
+
+      color: var(--primary-text-color);
+
+
+
+      &[type="password"],
+
+      &[type="text"] {
+
+        padding-right: 40px;
+
+      }
 
 
 
       &:focus {
 
-        background-color: var(--input-focus-bg-color, #3a3a3a);
+        outline: none;
 
         border-color: var(--theme-color);
+
+        box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
+
+        background-color: var(--input-focus-bg-color, #fff);
 
       }
 
@@ -3909,7 +3162,7 @@ export default {
 
       &::placeholder {
 
-        color: var(--placeholder-color, #777);
+        color: var(--placeholder-color, #aaa);
 
       }
 
@@ -3921,7 +3174,667 @@ export default {
 
   .input-with-button {
 
+    display: flex;
+
+    align-items: stretch;
+
+    height: 45px;
+
+    width: 100%;
+
+
+
+    .verification-input {
+
+      flex: 1;
+
+
+
+      .form-control {
+
+        border-top-right-radius: 0;
+
+        border-bottom-right-radius: 0;
+
+        height: 100%;
+
+      }
+
+    }
+
+
+
     .send-code-btn {
+
+      border-top-left-radius: 0;
+
+      border-bottom-left-radius: 0;
+
+      border-top-right-radius: 8px;
+
+      border-bottom-right-radius: 8px;
+
+      padding: 0 15px;
+
+      min-width: 100px;
+
+      white-space: nowrap;
+
+      font-size: 0.875rem;
+
+      border: none;
+
+      background-color: var(--theme-color);
+
+      color: white;
+
+      margin: 0;
+
+      height: 100%;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      cursor: pointer;
+
+      transition: background-color 0.3s, opacity 0.3s, transform 0.3s;
+
+
+
+      &:hover:not(:disabled) {
+
+        background-color: var(--primary-color-hover);
+
+      }
+
+
+
+      &:disabled {
+
+        opacity: 0.6;
+
+        cursor: not-allowed;
+
+        transform: translateY(0);
+
+      }
+
+
+
+      &:not(:disabled) {
+
+        transform: translateY(0);
+
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+
+
+        &:hover {
+
+          transform: translateY(-2px);
+
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+        }
+
+      }
+
+
+
+      .icon-left {
+
+        margin-right: 5px;
+
+      }
+
+    }
+
+  }
+
+
+
+  .btn {
+
+    height: 45px;
+
+    border-radius: 8px;
+
+    transition: all 0.3s;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+
+
+    &.btn-primary {
+
+      background-color: var(--theme-color);
+
+      border: none;
+
+      color: white;
+
+      font-weight: 600;
+
+
+
+      &:hover:not(:disabled) {
+
+        background-color: var(--primary-color-hover);
+
+      }
+
+
+
+      &:disabled {
+
+        opacity: 0.6;
+
+        cursor: not-allowed;
+
+      }
+
+
+
+      .icon-right {
+
+        margin-left: 8px;
+
+      }
+
+    }
+
+
+
+    &.btn-secondary {
+
+      position: relative;
+
+      overflow: hidden;
+
+
+
+      &.btn-block {
+
+        transition: all 0.3s ease;
+
+
+
+        &:hover {
+
+          color: var(--theme-color) !important;
+
+          border-color: var(--theme-color) !important;
+
+          background-color: rgba(var(--theme-color-rgb), 0.05) !important;
+
+          -webkit-text-fill-color: var(--theme-color) !important;
+
+          background-image: none !important;
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+
+  .agreement-checkbox {
+
+    margin-top: 1.5rem;
+
+
+
+    .checkbox-container {
+
+      display: flex;
+
+      align-items: flex-start;
+
+      position: relative;
+
+      padding-left: 30px;
+
+      cursor: pointer;
+
+      font-size: 0.9rem;
+
+      user-select: none;
+
+
+
+      input {
+
+        position: absolute;
+
+        opacity: 0;
+
+        cursor: pointer;
+
+        height: 0;
+
+        width: 0;
+
+
+
+        &:checked~.checkmark {
+
+          background-color: var(--theme-color);
+
+          border-color: var(--theme-color);
+
+
+
+          &:after {
+
+            display: block;
+
+          }
+
+        }
+
+      }
+
+
+
+      .checkmark {
+
+        position: absolute;
+
+        top: 0;
+
+        left: 0;
+
+        height: 20px;
+
+        width: 20px;
+
+        background-color: transparent;
+
+        border: 2px solid var(--border-color);
+
+        border-radius: 4px;
+
+        transition: all 0.2s ease;
+
+
+
+        &:after {
+
+          content: "";
+
+          position: absolute;
+
+          display: none;
+
+          left: 5px;
+
+          top: 0.5px;
+
+          width: 5px;
+
+          height: 10px;
+
+          border: solid white;
+
+          border-width: 0 2px 2px 0;
+
+          transform: rotate(45deg);
+
+        }
+
+      }
+
+
+
+      .checkbox-label {
+
+        color: var(--secondary-text-color);
+
+        font-size: 0.875rem;
+
+        line-height: 1.5;
+
+
+
+        a {
+
+          position: relative;
+
+          color: var(--theme-color);
+
+          text-decoration: none;
+
+          background: linear-gradient(90deg, var(--theme-color) 0%, var(--theme-hover-color, #4bc8a2) 100%);
+
+          background-size: 200% 100%;
+
+          -webkit-background-clip: text;
+
+          background-clip: text;
+
+          -webkit-text-fill-color: transparent;
+
+          transition: all 0.3s ease-in-out;
+
+
+
+          &:hover {
+
+            background-position: 100% 0;
+
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+
+  .error-message {
+
+    display: block;
+
+    color: var(--error-color, #ff4d4f);
+
+    font-size: 0.8rem;
+
+    margin-top: 0.3rem;
+
+  }
+
+
+
+
+
+  @media (max-width: 576px) {
+
+    .auth-split-right {
+
+      padding: 20px 0;
+
+    }
+
+
+
+    .auth-form-container {
+
+      padding: 30px 20px;
+
+      margin: auto;
+
+    }
+
+
+
+    .auth-header {
+
+      margin-bottom: 1.5rem;
+
+
+
+      .auth-logo img {
+
+        height: 50px;
+
+      }
+
+
+
+      .auth-title {
+
+        font-size: 1.5rem;
+
+      }
+
+    }
+
+
+
+    .input-with-button {
+
+      flex-direction: row;
+
+      height: 45px;
+
+      gap: 0;
+
+
+
+      .verification-input .form-control {
+
+        border-top-right-radius: 0;
+
+        border-bottom-right-radius: 0;
+
+      }
+
+
+
+      .send-code-btn {
+
+        width: auto;
+
+        min-width: 100px;
+
+        border-top-left-radius: 0;
+
+        border-bottom-left-radius: 0;
+
+        border-top-right-radius: 8px;
+
+        border-bottom-right-radius: 8px;
+
+        height: 100%;
+
+      }
+
+    }
+
+  }
+
+
+
+
+
+  @media (min-width: 576px) and (max-width: 992px) {
+
+    .auth-split-right {
+
+      padding: 2rem;
+
+    }
+
+  }
+
+
+
+
+
+  .dark-theme {
+
+    .loading-container .loading-spinner {
+
+      color: var(--theme-color);
+
+    }
+
+
+
+    .input-with-suffix {
+
+      background-color: var(--input-bg-color, #333);
+
+      border-color: var(--input-border-color, #444);
+
+
+
+      &:hover {
+
+        background-color: var(--input-hover-bg-color, #383838);
+
+      }
+
+
+
+      &:focus-within {
+
+        border-color: var(--theme-color);
+
+        background-color: var(--input-focus-bg-color, #3a3a3a);
+
+      }
+
+
+
+      .email-suffix {
+
+        border-left-color: var(--input-border-color, #444);
+
+
+
+        &:hover:not(.disabled) {
+
+          background-color: var(--input-hover-bg-color, #383838);
+
+        }
+
+
+
+        .suffix-dropdown {
+
+          background-color: var(--card-background);
+
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+          border-color: var(--input-border-color, #444);
+
+
+
+          &:before {
+
+            background-color: var(--card-background);
+
+            border-color: var(--input-border-color, #444);
+
+          }
+
+
+
+          .suffix-option {
+
+            &:hover {
+
+              background-color: rgba(var(--theme-color-rgb), 0.15);
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+
+
+    .input-with-icon {
+
+      .input-icon {
+
+        color: var(--secondary-text-color);
+
+      }
+
+
+
+      .form-control {
+
+        background-color: var(--input-bg-color, #333);
+
+        border-color: var(--input-border-color, #444);
+
+
+
+        &:focus {
+
+          background-color: var(--input-focus-bg-color, #3a3a3a);
+
+          border-color: var(--theme-color);
+
+        }
+
+
+
+        &::placeholder {
+
+          color: var(--placeholder-color, #777);
+
+        }
+
+      }
+
+    }
+
+
+
+    .input-with-button {
+
+      .send-code-btn {
+
+        background-color: var(--theme-color);
+
+
+
+        &:hover:not(:disabled) {
+
+          background-color: var(--primary-color-hover);
+
+        }
+
+      }
+
+    }
+
+
+
+    .checkbox-container {
+
+      .checkbox-label {
+
+        color: var(--secondary-text-color);
+
+      }
+
+
+
+      .checkmark {
+
+        background-color: transparent;
+
+        border-color: var(--border-color, #555);
+
+      }
+
+    }
+
+
+
+    .btn-primary {
 
       background-color: var(--theme-color);
 
@@ -3939,53 +3852,35 @@ export default {
 
 
 
-  .checkbox-container {
+  .auth-footer {
 
-    .checkbox-label {
-
-      color: var(--secondary-text-color);
-
-    }
+    margin-top: 24px;
 
 
 
-    .checkmark {
+    a.btn {
 
-      background-color: transparent;
+      display: flex !important;
 
-      border-color: var(--border-color, #555);
+      align-items: center !important;
 
-    }
+      justify-content: center !important;
 
-  }
+      text-decoration: none;
 
+      height: 45px !important;
 
-
-  .btn-primary {
-
-    background-color: var(--theme-color);
-
-
-
-    &:hover:not(:disabled) {
-
-      background-color: var(--primary-color-hover);
+      line-height: normal !important;
 
     }
 
   }
 
-}
 
 
+  .btn.btn-secondary.btn-block {
 
-.auth-footer {
-
-  margin-top: 24px;
-
-
-
-  a.btn {
+    height: 45px !important;
 
     display: flex !important;
 
@@ -3993,229 +3888,200 @@ export default {
 
     justify-content: center !important;
 
-    text-decoration: none;
-
-    height: 45px !important;
-
     line-height: normal !important;
 
-  }
+    color: var(--text-color) !important;
 
-}
+    border: 1px solid var(--border-color) !important;
 
+    background-color: transparent !important;
 
-
-.btn.btn-secondary.btn-block {
-
-  height: 45px !important;
-
-  display: flex !important;
-
-  align-items: center !important;
-
-  justify-content: center !important;
-
-  line-height: normal !important;
-
-  color: var(--text-color) !important;
-
-  border: 1px solid var(--border-color) !important;
-
-  background-color: transparent !important;
-
-  transition: all 0.3s ease !important;
+    transition: all 0.3s ease !important;
 
 
 
-  &:hover {
+    &:hover {
 
-    border-color: var(--theme-color) !important;
+      border-color: var(--theme-color) !important;
 
-    background-color: rgba(var(--theme-color-rgb), 0.05) !important;
+      background-color: rgba(var(--theme-color-rgb), 0.05) !important;
 
-    color: var(--theme-color) !important;
+      color: var(--theme-color) !important;
 
-    -webkit-text-fill-color: var(--theme-color) !important;
+      -webkit-text-fill-color: var(--theme-color) !important;
 
-    background-image: none !important;
+      background-image: none !important;
 
-  }
-
-}
-
-
-
-.loading-wrapper {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 8px;
-
-  transition: all 0.3s ease;
-
-
-
-  svg {
-
-    display: none;
+    }
 
   }
 
 
 
-  &::before {
+  .loading-wrapper {
 
-    content: "";
+    display: flex;
 
-    width: 16px;
+    align-items: center;
 
-    height: 16px;
+    justify-content: center;
 
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    gap: 8px;
 
-    border-radius: 50%;
+    transition: all 0.3s ease;
 
-    border-top-color: white;
 
-    animation: spin 1s linear infinite;
 
-    margin-right: 8px;
+    svg {
+
+      display: none;
+
+    }
+
+
+
+    &::before {
+
+      content: "";
+
+      width: 16px;
+
+      height: 16px;
+
+      border: 2px solid rgba(255, 255, 255, 0.3);
+
+      border-radius: 50%;
+
+      border-top-color: white;
+
+      animation: spin 1s linear infinite;
+
+      margin-right: 8px;
+
+    }
+
+
+
+    span {
+
+      display: inline-block;
+
+      animation: pulse 1.5s infinite ease-in-out;
+
+    }
 
   }
 
 
 
-  span {
+  @keyframes pulse {
 
-    display: inline-block;
+    0%,
+    100% {
+      opacity: 1;
+    }
 
-    animation: pulse 1.5s infinite ease-in-out;
+    50% {
+      opacity: 0.7;
+    }
 
   }
 
-}
 
 
-
-@keyframes pulse {
-
-  0%, 100% { opacity: 1; }
-
-  50% { opacity: 0.7; }
-
-}
-
-
-
-.auth-form-container {
-
-  opacity: 0;
-
-  animation: fadeIn 0.3s ease forwards;
-
-}
-
-
-
-@keyframes fadeIn {
-
-  from {
+  .auth-form-container {
 
     opacity: 0;
 
-  }
-
-  to {
-
-    opacity: 1;
-
-  }
-
-}
-
-
-
-@keyframes gradient-shift {
-
-  0% {
-
-    background-position: 0% 50%;
-
-  }
-
-  50% {
-
-    background-position: 100% 50%;
-
-  }
-
-  100% {
-
-    background-position: 0% 50%;
-
-  }
-
-}
-
-
-
-.auth-logo {
-
-  margin-bottom: 1.5rem;
-
-  text-align: center;
-
-
-
-  @media (min-width: 993px) {
-
-    text-align: left;
+    animation: fadeIn 0.3s ease forwards;
 
   }
 
 
 
-  img {
+  @keyframes fadeIn {
 
-    width: 60px;
+    from {
 
-    height: 60px;
+      opacity: 0;
 
-    min-width: 60px;
+    }
 
-    min-height: 60px;
+    to {
 
-    border-radius: 12px;
+      opacity: 1;
 
-    object-fit: cover;
-
-    cursor: pointer;
-
-    user-select: none;
+    }
 
   }
 
-}
+
+
+  @keyframes gradient-shift {
+
+    0% {
+
+      background-position: 0% 50%;
+
+    }
+
+    50% {
+
+      background-position: 100% 50%;
+
+    }
+
+    100% {
+
+      background-position: 0% 50%;
+
+    }
+
+  }
 
 
 
-.captcha-container {
+  .auth-logo {
 
-  display: flex;
+    margin-bottom: 1.5rem;
 
-  justify-content: center;
-
-  margin: 10px 0;
+    text-align: center;
 
 
 
-  .google-captcha,
+    @media (min-width: 993px) {
 
-  .cloudflare-captcha {
+      text-align: left;
+
+    }
+
+
+
+    img {
+
+      width: 60px;
+
+      height: 60px;
+
+      min-width: 60px;
+
+      min-height: 60px;
+
+      border-radius: 12px;
+
+      object-fit: cover;
+
+      cursor: pointer;
+
+      user-select: none;
+
+    }
+
+  }
+
+
+
+  .captcha-container {
 
     display: flex;
 
@@ -4223,67 +4089,45 @@ export default {
 
     margin: 10px 0;
 
-    min-height: 78px;
 
 
+    .google-captcha,
 
-    #form-recaptcha,
+    .cloudflare-captcha {
 
-    #form-turnstile {
+      display: flex;
 
-      display: inline-block;
+      justify-content: center;
 
-      min-width: 302px;
+      margin: 10px 0;
 
       min-height: 78px;
+
+
+
+      #form-recaptcha,
+
+      #form-turnstile {
+
+        display: inline-block;
+
+        min-width: 302px;
+
+        min-height: 78px;
+
+      }
 
     }
 
   }
 
-}
 
 
 
 
+  .captcha-modal {
 
-.captcha-modal {
-
-  position: fixed;
-
-  top: 0;
-
-  left: 0;
-
-  right: 0;
-
-  bottom: 0;
-
-  z-index: 1000;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  opacity: 1;
-
-  transition: opacity 0.3s ease;
-
-
-
-  &.closing {
-
-    opacity: 0;
-
-  }
-
-
-
-  .captcha-modal-overlay {
-
-    position: absolute;
+    position: fixed;
 
     top: 0;
 
@@ -4293,45 +4137,21 @@ export default {
 
     bottom: 0;
 
-    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
 
-    backdrop-filter: blur(3px);
+    display: flex;
 
-  }
+    align-items: center;
 
-
-
-  .captcha-modal-content {
-
-    position: relative;
-
-    width: 100%;
-
-    max-width: 420px;
-
-    background-color: var(--card-background);
-
-    border-radius: 12px;
-
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-
-    z-index: 1001;
-
-    overflow: hidden;
-
-    animation: modalFadeIn 0.3s ease;
-
-    transform: translateY(0);
-
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    justify-content: center;
 
     opacity: 1;
+
+    transition: opacity 0.3s ease;
 
 
 
     &.closing {
-
-      transform: translateY(-20px);
 
       opacity: 0;
 
@@ -4339,117 +4159,177 @@ export default {
 
 
 
-    .captcha-modal-header {
+    .captcha-modal-overlay {
 
-      display: flex;
+      position: absolute;
 
-      align-items: center;
+      top: 0;
 
-      justify-content: space-between;
+      left: 0;
 
-      padding: 16px 20px;
+      right: 0;
 
-      border-bottom: 1px solid var(--border-color);
+      bottom: 0;
+
+      background-color: rgba(0, 0, 0, 0.5);
+
+      backdrop-filter: blur(3px);
+
+    }
 
 
 
-      h3 {
+    .captcha-modal-content {
 
-        margin: 0;
+      position: relative;
 
-        font-size: 18px;
+      width: 100%;
 
-        font-weight: 600;
+      max-width: 420px;
 
-        color: var(--primary-text-color);
+      background-color: var(--card-background);
+
+      border-radius: 12px;
+
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+      z-index: 1001;
+
+      overflow: hidden;
+
+      animation: modalFadeIn 0.3s ease;
+
+      transform: translateY(0);
+
+      transition: transform 0.3s ease, opacity 0.3s ease;
+
+      opacity: 1;
+
+
+
+      &.closing {
+
+        transform: translateY(-20px);
+
+        opacity: 0;
 
       }
 
 
 
-      .close-btn {
-
-        background: none;
-
-        border: none;
-
-        cursor: pointer;
-
-        font-size: 24px;
-
-        line-height: 1;
-
-        color: var(--secondary-text-color);
-
-        padding: 0;
-
-        width: 24px;
-
-        height: 24px;
+      .captcha-modal-header {
 
         display: flex;
 
         align-items: center;
 
-        justify-content: center;
+        justify-content: space-between;
 
-        transition: color 0.2s;
+        padding: 16px 20px;
+
+        border-bottom: 1px solid var(--border-color);
 
 
 
-        &:hover {
+        h3 {
+
+          margin: 0;
+
+          font-size: 18px;
+
+          font-weight: 600;
 
           color: var(--primary-text-color);
 
         }
 
+
+
+        .close-btn {
+
+          background: none;
+
+          border: none;
+
+          cursor: pointer;
+
+          font-size: 24px;
+
+          line-height: 1;
+
+          color: var(--secondary-text-color);
+
+          padding: 0;
+
+          width: 24px;
+
+          height: 24px;
+
+          display: flex;
+
+          align-items: center;
+
+          justify-content: center;
+
+          transition: color 0.2s;
+
+
+
+          &:hover {
+
+            color: var(--primary-text-color);
+
+          }
+
+        }
+
       }
 
-    }
+
+
+      .captcha-modal-body {
+
+        padding: 20px;
 
 
 
-    .captcha-modal-body {
+        p {
 
-      padding: 20px;
+          margin-top: 0;
 
+          margin-bottom: 16px;
 
+          color: var(--secondary-text-color);
 
-      p {
-
-        margin-top: 0;
-
-        margin-bottom: 16px;
-
-        color: var(--secondary-text-color);
-
-      }
+        }
 
 
 
-      .google-captcha,
+        .google-captcha,
 
-      .cloudflare-captcha {
+        .cloudflare-captcha {
 
-        display: flex;
+          display: flex;
 
-        justify-content: center;
+          justify-content: center;
 
-        margin: 15px 0;
-
-        min-height: 78px;
-
-
-
-        #modal-recaptcha,
-
-        #modal-turnstile {
-
-          display: inline-block;
-
-          min-width: 302px;
+          margin: 15px 0;
 
           min-height: 78px;
+
+
+
+          #modal-recaptcha,
+
+          #modal-turnstile {
+
+            display: inline-block;
+
+            min-width: 302px;
+
+            min-height: 78px;
+
+          }
 
         }
 
@@ -4459,28 +4339,25 @@ export default {
 
   }
 
-}
 
 
+  @keyframes modalFadeIn {
 
-@keyframes modalFadeIn {
+    from {
 
-  from {
+      opacity: 0;
 
-    opacity: 0;
+      transform: translateY(-20px);
 
-    transform: translateY(-20px);
+    }
+
+    to {
+
+      opacity: 1;
+
+      transform: translateY(0);
+
+    }
 
   }
-
-  to {
-
-    opacity: 1;
-
-    transform: translateY(0);
-
-  }
-
-}
-
 </style>
