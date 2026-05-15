@@ -69,7 +69,7 @@ export const config = {
         copyright: `© ${new Date().getFullYear()} EZ-THEME-R. All Rights Reserved.`,
 
         // 是否显示标题中的网站Logo (true=显示, false=隐藏)
-        showLogo: true,
+        showLogo: false,
 
         // Landing页面多语言标语
         landingText: {
@@ -143,7 +143,7 @@ export const config = {
     // 认证页面布局配置
     AUTH_LAYOUT_CONFIG: {
         // 布局类型: 'center' 为居中卡片布局, 'split' 为左右分栏布局
-        layoutType: 'center',
+        layoutType: 'split',
 
         // 左右分栏布局配置 (仅当 layoutType 为 'split' 时生效)
         splitLayout: {
@@ -233,10 +233,10 @@ export const config = {
     // 仪表盘页面配置
     DASHBOARD_CONFIG: {
         // 是否在欢迎卡片中显示用户邮箱 (true=显示, false=隐藏)
-        showUserEmail: false,
+        showUserEmail: true,
 
         // 是否为导入订阅按钮添加高光效果和填充底色 (true=添加效果, false=不添加效果)
-        importButtonHighlightBtnbgcolor: false,
+        importButtonHighlightBtnbgcolor: true,
 
         // ===============================
 
